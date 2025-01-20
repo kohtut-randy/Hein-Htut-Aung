@@ -1,5 +1,5 @@
 import styles from './HeroStyles.module.css';
-import heroImg from '../../assets/Design uten navn.png';
+import heroImg from '../../assets/image.png';
 import sun from '../../assets/sun.svg';
 import moon from '../../assets/moon.svg';
 import twitterLight from '../../assets/twitter-light.svg';
@@ -36,9 +36,8 @@ function Hero() {
       </div>
       <div className={styles.info}>
         <h1>
-          Harris
-          <br />
-          Johnsen
+          Hein Htut Aung
+          
         </h1>
         <h2>Frontend Developer</h2>
         <span>

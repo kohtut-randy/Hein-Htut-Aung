@@ -10,6 +10,7 @@ import linkedinLight from "../../assets/linkedin-light.svg";
 import linkedinDark from "../../assets/linkedin-dark.svg";
 import CV from "../../assets/cv.pdf";
 import { useTheme } from "../../common/ThemeContext";
+import { Typewriter } from "react-simple-typewriter";
 
 function Hero() {
   const { theme, toggleTheme } = useTheme();
@@ -35,8 +36,13 @@ function Hero() {
         />
       </div>
       <div className={styles.info}>
-        <h1>Hein Htut Aung</h1>
-        <h2>Frontend Developer</h2>
+        <h1>
+          {/* <Typewriter words={["Hein Htut Aung"]} loop /> */}
+          Hein Htut Aung
+        </h1>
+        <h2>
+          <Typewriter words={["Frontend Developer"]} loop />
+        </h2>
         <span>
           {/* <a href="https://twitter.com/" target="_blank">
             <img src={twitterIcon} alt="Twitter icon" />

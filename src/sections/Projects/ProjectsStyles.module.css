@@ -31,6 +31,7 @@
     transform: translate(-50%, -50%);
     background-color: var(--modal-color);
     position: absolute;
+    padding: 20px;
 }
 .projectsContainer {
   display: flex;

@@ -7,6 +7,7 @@
   --form-text-color: #555;
   --footer-text-color: #888;
   --modal-color: #fff;
+  --overlay-color: #fff;
 
 }
 
@@ -19,9 +20,14 @@
   --form-text-color: #fff;
   --footer-text-color: #bbb;
   --modal-color: #222;
+  --overlay-color: #222;
+
 
 }
+.ReactModal__Overlay {
+  background-color: var(--overlay-color) !important;
 
+}
 body {
   background-color: var(--background-color);
   display: flex;

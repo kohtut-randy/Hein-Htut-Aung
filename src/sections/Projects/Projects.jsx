@@ -86,7 +86,7 @@ function Projects() {
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
-          style={customStyles}
+          className={styles.modal}
         >
           <h2>{selected?.header}</h2>
           <ul>

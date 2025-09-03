@@ -54,14 +54,14 @@ const Navbar = () => {
             Skills
           </button>
         </li>
-        <li>
+        {/* <li>
            <button 
               onClick={() => scrollToSection('contact')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Contact
             </button>
-        </li>
+        </li> */}
       </ul>
       <button
         onClick={() => scrollToSection("contact")}

@@ -11,8 +11,7 @@ function Hero() {
   // const linkedinIcon = theme === "light" ? linkedinLight : linkedinDark;
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* <Navbar/> */}
+    <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-hero">
         <img
           src={heroImg}

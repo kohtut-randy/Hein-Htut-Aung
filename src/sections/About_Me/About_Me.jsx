@@ -63,7 +63,7 @@ const About_Me = () => {
   return (
     <section
       id="about"
-      className="w-full min-h-[60vh] flex flex-col items-center justify-center bg-[#111827] py-16 px-4 gap-8"
+      className="w-full min-h-screen flex flex-col items-center justify-center bg-[#111827] py-16 px-4 gap-8"
     >
       <div>
         <h1

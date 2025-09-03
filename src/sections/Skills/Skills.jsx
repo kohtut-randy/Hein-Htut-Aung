@@ -1,13 +1,8 @@
 import styles from "./SkillsStyles.module.css";
-import checkMarkIconDark from "../../assets/checkmark-dark.svg";
-import checkMarkIconLight from "../../assets/checkmark-light.svg";
-import SkillList from "../../common/SkillList";
-import { useTheme } from "../../common/ThemeContext";
-
 
 function Skills() {
   return (
-    <section id="skills" className="bg-[#111827] flex flex-col align-center justify-center gap-10 mt-10">
+    <section id="skills" className="bg-[#111827] min-h-screen flex flex-col align-center justify-center gap-5">
       <h1 style={{ color: "white"  }} className="text-center text-5xl">Skills & Technologies</h1>
       <p style={{ color: "white" }} className="text-center text-gray-400">
         Technologies I work with to bring ideas to life

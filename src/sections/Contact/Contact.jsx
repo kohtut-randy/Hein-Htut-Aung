@@ -17,7 +17,7 @@ function Contact() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center p-8 bg-gradient-to-br from-[#181E2A] to-[#1A1832] text-white gap-10">
+    <section id="contact" className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-[#181E2A] to-[#1A1832] text-white gap-10">
       <h1 className="text-5xl text-white">Get In Touch</h1>
       <h2 className="text-3xl font-bold">Let's start a conversation</h2>
       <p className="mt-4 text-lg">

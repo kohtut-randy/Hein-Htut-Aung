@@ -1,26 +1,88 @@
+
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  img {
-    width: 20px;
-  }
+  padding: 40px 0 0 0;
 }
 
-.skillList {
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  color: #b0b0b0;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+}
+
+.skillsGrid {
   display: flex;
-  justify-content: space-evenly;
-  align-self: center;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.skillsColumn {
+  background: rgba(30, 32, 48, 0.7);
+  border-radius: 16px;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+  flex: 1;
+  min-width: 260px;
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.columnTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.tags {
+  display: flex;
   flex-wrap: wrap;
-  row-gap: 40px;
-  max-width: 26ch;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.tags span {
+  background: linear-gradient(90deg, #232526 0%, #414345 100%);
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.45em 1.1em;
+  border-radius: 999px;
+  font-weight: 500;
+  margin-bottom: 0.2em;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.10);
+  transition: background 0.2s;
+}
+
+.tags span:hover {
+  background: linear-gradient(90deg, #6dd5ed 0%, #b993f8 100%);
+  color: #232526;
+}
+
+@media (min-width: 900px) {
+  .skillsGrid {
+    flex-direction: row;
+    gap: 2.5rem;
+  }
+  .skillsColumn {
+    margin: 0;
+  }
 }
 
 hr {

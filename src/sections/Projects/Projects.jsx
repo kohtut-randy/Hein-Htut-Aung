@@ -4,99 +4,85 @@ import freshBurger from "../../assets/fresh-burger.png";
 import hipsster from "../../assets/hipsster.png";
 import fitLift from "../../assets/fitlift.png";
 import ProjectCard from "../../common/ProjectCard";
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import Modal from "react-modal";
-const customStyles = {
-  content: {
-    width: "1000px",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+import React from "react";
 
 const Data = [
   {
-    img: "/icon.svg",
-    header: "SMART HR",
-    body: {
-      description: [
-        "Explored and developed the Employee Claim feature and its integration with the Admin Dashboard in Smart HR.",
-        "Implemented functionalities for Employee Self-Service (ESS) and Manager Self-Service (MSS), including on-behalf claim requests using React.js with TypeScript.",
-        "Leveraged React Query for state management and asynchronous data fetching, ensuring seamless backend interactions.",
-        "Designed and implemented a responsive and user-friendly interface using the Material UI framework, adhering to modern UI/UX standards.",
-        "Successfully integrated the module with a legacy system, ensuring compatibility and smooth data flow.",
-        "Enhanced overall system efficiency and user experience through effective implementation and integration.",
-      ],
-    },
+    initial: "N",
+    header: "NBA Team Manager",
+    description:
+      "NBA Team Manager is a Next.js + Redux web app for creating custom NBA teams, managing rosters, and assigning real players via the balldontlie API.",
+    tech: ["Next.js", "Redux",  "CSS3", "JavaScript"],
+    liveDemo: "#",
+    code: "#",
   },
   {
-    img: "/icon.svg",
-    header: "SMARTER HR",
-    body: {
-      description: [
-        "Worked on Smarter HR, exploring and developing comprehensive HR services, including Attendance tracking,Leave management,Overtime tracking,Payroll processing,Various other setups.",
-        "Designed and implemented features for Employee Self-Service (ESS), Manager Self-Service (MSS), and the Admin Dashboard using React.js with TypeScript.",
-        "Utilized React Query for efficient state management and data handling, ensuring real-time updates and smooth user interactions.",
-        "Developed responsive and intuitive user interfaces with the Material UI framework, delivering a modern and user-friendly experience.",
-        "Played a key role in enhancing functionality and streamlining HR processes across the platform.",
-      ],
-    },
+    initial: "S",
+    header: "Smarter HR",
+    description:
+      "A modern HRIS frontend application built with React, TypeScript, Redux, MUI, and Ant Design. It provides scalable and maintainable solutions for enterprise HR management.",
+    tech: ["React", "TypeScript", "Redux", "MUI", "Ant Design"],
+    liveDemo: "#",
+    code: "#",
+  },
+  {
+    initial: "S",
+    header: "Smart HR",
+    description:
+      "The Admin Claim module enables administrators to efficiently review and process employee claims. It is built using React, TypeScript, Vite, and Tailwind CSS.",
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS"],
+    liveDemo: "#",
+    code: "#",
   },
 ];
 function Projects() {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState();
-  function openModal(item) {
-    setIsOpen(true);
-    setSelected(item);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   return (
-    <section id="projects" className={styles.container}>
-      <h1 className="sectionTitle">Projects</h1>
-      <div className={styles.projectsContainer}>
+    <section id="projects" className="flex flex-col items-center justify-center gap-10">
+      <h1 style={{color: "white"}} className="text-5xl">Projects</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {Data.map((item, index) => (
-          <div key={index}>
-            <div
-              onClick={() => {
-                openModal(item);
-              }}
-              style={{ border: "none", cursor: "pointer" }}
-            >
-              <img src={item.img} alt="" style={{ width: "80px" }} />
-              <p>{item.header}</p>
+          <div
+            key={index}
+            className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg p-6 flex flex-col justify-between min-h-[320px]"
+          >
+            <div className="flex flex-col items-start">
+              <div style={{color: "white"}} className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4">
+                {item.initial}
+              </div>
+              <h2 style={{color: "white"}} className="text-xl font-semibold text-white mb-2">{item.header}</h2>
+              <p style={{color: "white"}} className="text-gray-300 mb-4">{item.description}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {item.tech.map((tech, i) => (
+                  <span
+                  style={{color: "white"}}
+                    key={i}
+                    className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff]"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
+            {/* <div className="flex gap-4 mt-auto">
+              <a
+                href={item.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#6c63ff] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#5548c8] transition"
+              >
+                Live Demo
+              </a>
+              <a
+                href={item.code}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-transparent border border-[#6c63ff] text-[#6c63ff] px-4 py-2 rounded-lg font-medium hover:bg-[#23235b] hover:text-white transition"
+              >
+                Code
+              </a>
+            </div> */}
           </div>
         ))}
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          className={styles.modal}
-        >
-          <h2>{selected?.header}</h2>
-          <ul>
-            {selected?.body.description.map((item, index) => (
-              <li style={{ marginTop: "10px" }}>
-                <p>{item}</p>
-              </li>
-            ))}
-          </ul>
-        </Modal>
       </div>
     </section>
   );

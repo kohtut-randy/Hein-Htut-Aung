@@ -12,7 +12,7 @@ const Data = [
     header: "NBA Team Manager",
     description:
       "NBA Team Manager is a Next.js + Redux web app for creating custom NBA teams, managing rosters, and assigning real players via the balldontlie API.",
-    tech: ["Next.js", "Redux",  "CSS3", "JavaScript"],
+    tech: ["Next.js", "Redux", "CSS3", "JavaScript"],
     liveDemo: "#",
     code: "#",
   },
@@ -37,24 +37,39 @@ const Data = [
 ];
 function Projects() {
   return (
-    <section id="projects" className=" min-h-screen flex flex-col items-center justify-center gap-10">
-      <h1 style={{color: "white"}} className="text-5xl">Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <section
+      id="projects"
+      className=" min-h-screen flex flex-col items-center justify-center gap-10"
+    >
+      <h1 style={{ color: "white" }} className="text-5xl">
+        Projects
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
         {Data.map((item, index) => (
           <div
             key={index}
             className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-6 flex flex-col justify-between min-h-[200px]"
           >
             <div className="flex flex-col items-start">
-              <div style={{color: "white"}} className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4">
+              <div
+                style={{ color: "white" }}
+                className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4 mt-2"
+              >
                 {item.initial}
               </div>
-              <h2 style={{color: "white"}} className="text-xl font-semibold text-white mb-2">{item.header}</h2>
-              <p style={{color: "white"}} className="text-gray-300 mb-4">{item.description}</p>
+              <h2
+                style={{ color: "white" }}
+                className="text-xl font-semibold text-white mb-2"
+              >
+                {item.header}
+              </h2>
+              <p style={{ color: "white" }} className="text-gray-300 mb-4">
+                {item.description}
+              </p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {item.tech.map((tech, i) => (
                   <span
-                  style={{color: "white"}}
+                    style={{ color: "white" }}
                     key={i}
                     className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff]"
                   >

@@ -11,7 +11,10 @@ function Hero() {
   // const linkedinIcon = theme === "light" ? linkedinLight : linkedinDark;
 
   return (
-    <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section
+      id="hero"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden"
+    >
       <div className="absolute inset-0 bg-gradient-hero">
         <img
           src={heroImg}
@@ -41,7 +44,15 @@ function Hero() {
             style={{ color: "#ff0400ff" }}
             className="text-2xl md:text-3xl font-semibold text-foreground"
           >
-            <Typewriter words={["SOFTWARE ENGINEER"]} loop />
+            <Typewriter
+              words={["SOFTWARE ENGINEER"]}
+              loop={0} // 0 or true for infinite loop
+              cursor
+              cursorStyle="_"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={3000} // This holds the text for 3 seconds before deleting
+            />{" "}
           </h2>
 
           <p
@@ -53,7 +64,9 @@ function Hero() {
             intuitive interfaces that users love.
           </p>
           <a href="/Hein_Htut_Aung_Resume.pdf" download>
-            <button className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer">Download Resume</button>
+            <button className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer">
+              Download Resume
+            </button>
           </a>
         </div>
       </div>
@@ -62,4 +75,3 @@ function Hero() {
 }
 
 export default Hero;
-

@@ -63,11 +63,11 @@ function Hero() {
             TypeScript, and modern design principles. Passionate about creating
             intuitive interfaces that users love.
           </p>
-          <a href="/Hein_Htut_Aung_Resume.pdf" download>
+          {/* <a href="/Hein_Htut_Aung_Resume.pdf" download>
             <button className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer">
               Download Resume
             </button>
-          </a>
+          </a> */}
         </div>
       </div>
     </section>

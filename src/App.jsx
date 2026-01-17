@@ -6,15 +6,17 @@ import Hero from "./sections/Hero/Hero";
 import Projects from "./sections/Projects/Projects";
 import Skills from "./sections/Skills/Skills";
 import About_Me from "./sections/About_Me/About_Me";
+import CertificateSection from "./sections/Cert/CertSection";
 function App() {
   return (
     <div className="w-[100%] bg-[#111827] flex flex-col gap 10">
       <Navbar />
-      <Hero/>
-      <About_Me/>
-      <Projects/>
-      <Skills/>
-      <Contact/>
+      <Hero />
+      <About_Me />
+      <Projects />
+      <Skills />
+      <CertificateSection />
+      <Contact />
       {/* <Routes>
         <Route path="/about" element={<About_Me />} />
         <Route path="/skills" element={<Skills />} />
@@ -27,4 +29,6 @@ function App() {
 }
 
 export default App;
-      {/* <Contact /> */}
+{
+  /* <Contact /> */
+}

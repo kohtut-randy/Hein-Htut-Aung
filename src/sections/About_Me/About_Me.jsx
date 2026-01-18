@@ -1,4 +1,6 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const features = [
   {
@@ -60,22 +62,37 @@ const features = [
 ];
 
 const About_Me = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
   return (
     <section
+      ref={ref}
       id="about"
       className="w-full min-h-screen flex flex-col items-center justify-center bg-[#111827] py-16 px-4 gap-8"
     >
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
         <h1
           style={{ color: "white", marginBottom: "30px" }}
           className="text-5xl"
         >
           About Me
         </h1>
-      </div>
+      </motion.div>
       <div className="max-w-6xl w-full flex flex-col md:flex-row gap-10 md:gap-20">
         {/* Left: Intro */}
-        <div className="flex-1 text-white">
+        <motion.div
+          className="flex-1 text-white"
+          initial={{ opacity: 0, x: -50 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           <h2
             style={{ color: "white" }}
             className="text-2xl md:text-3xl font-bold mb-4"
@@ -96,13 +113,25 @@ const About_Me = () => {
             solutions that improve business operations and enhance user
             satisfaction.
           </p>
-        </div>
+        </motion.div>
         {/* Right: Features */}
-        <div className="flex-1 flex flex-col gap-4">
+        <motion.div
+          className="flex-1 flex flex-col gap-4"
+          initial={{ opacity: 0, x: 50 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           {features.map((feature, idx) => (
-            <div
+            <motion.div
               key={idx}
               className="flex items-start gap-4 bg-[#181f2a] rounded-xl p-5 border border-[#232b3a] shadow-md"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.6 + idx * 0.1 }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+              }}
             >
               <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#232b3a] rounded-lg">
                 {feature.icon}
@@ -118,9 +147,9 @@ const About_Me = () => {
                   {feature.desc}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

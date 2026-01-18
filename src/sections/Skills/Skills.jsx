@@ -1,9 +1,15 @@
 import styles from "./SkillsStyles.module.css";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 function Skills() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const [titleRef, titleInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
 
   const frontendSkills = [
     { name: "React", level: 90 },
@@ -83,16 +89,39 @@ function Skills() {
     <section
       ref={sectionRef}
       id="skills"
-      className="bg-[#111827] min-h-screen flex flex-col align-center justify-center gap-5"
+      className="bg-[#111827] min-h-screen flex flex-col items-center justify-center gap-5 py-20"
     >
-      <h1 style={{ color: "white" }} className="text-center text-5xl">
+      <motion.h1
+        ref={titleRef}
+        style={{ color: "white" }}
+        className="text-center text-5xl"
+        initial={{ opacity: 0, y: 50 }}
+        animate={titleInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
         Skills & Technologies
-      </h1>
-      <p style={{ color: "white" }} className="text-center text-gray-400">
+      </motion.h1>
+      <motion.p
+        style={{ color: "white" }}
+        className="text-center text-gray-400"
+        initial={{ opacity: 0 }}
+        animate={titleInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         Technologies I work with to bring ideas to life
-      </p>
-      <div className={styles.skillsGrid}>
-        <div className={styles.skillsColumn}>
+      </motion.p>
+      <motion.div
+        className={styles.skillsGrid}
+        initial={{ opacity: 0 }}
+        animate={titleInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
+        <motion.div
+          className={styles.skillsColumn}
+          initial={{ opacity: 0, x: -50 }}
+          animate={titleInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
           <h2 className={styles.columnTitle} style={{ color: "#6dd5ed" }}>
             Frontend
           </h2>
@@ -107,8 +136,13 @@ function Skills() {
               />
             ))}
           </div>
-        </div>
-        <div className={styles.skillsColumn}>
+        </motion.div>
+        <motion.div
+          className={styles.skillsColumn}
+          initial={{ opacity: 0, y: 50 }}
+          animate={titleInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
           <h2 className={styles.columnTitle} style={{ color: "#b993f8" }}>
             Tools & Libraries
           </h2>
@@ -123,8 +157,13 @@ function Skills() {
               />
             ))}
           </div>
-        </div>
-        <div className={styles.skillsColumn}>
+        </motion.div>
+        <motion.div
+          className={styles.skillsColumn}
+          initial={{ opacity: 0, x: 50 }}
+          animate={titleInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.7 }}
+        >
           <h2 className={styles.columnTitle} style={{ color: "#f7971e" }}>
             Backend & Cloud
           </h2>
@@ -139,8 +178,8 @@ function Skills() {
               />
             ))}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <hr />
     </section>
   );

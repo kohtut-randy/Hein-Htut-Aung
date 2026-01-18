@@ -1,6 +1,8 @@
 import React from "react";
 import CertCard from "./CertCard";
 import { Award } from "lucide-react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import fecert from "../../assets/frontend_developer_react certificate.jpg";
 import basic from "../../assets/javascript_basic certificate.jpg";
 import mid from "../../assets/javascript_intermediate certificate.jpg";
@@ -59,12 +61,23 @@ const certifications = [
 ];
 
 function CertSection() {
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
   return (
     <section
+      ref={ref}
       id="certifications"
       className="h-auto flex flex-col items-center justify-center gap-10 py-20 px-4"
     >
-      <div className="text-center max-w-4xl mb-8">
+      <motion.div
+        className="text-center max-w-4xl mb-8"
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
           Certifications & Credentials
         </h1>
@@ -72,11 +85,18 @@ function CertSection() {
           Continuous learning and professional growth through
           industry-recognized certifications
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full px-4">
         {certifications.map((cert, index) => (
-          <CertCard key={index} {...cert} />
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <CertCard {...cert} />
+          </motion.div>
         ))}
       </div>
     </section>

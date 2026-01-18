@@ -1,4 +1,6 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Data = [
   {
@@ -30,19 +32,39 @@ const Data = [
   },
 ];
 function Projects() {
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
   return (
     <section
+      ref={ref}
       id="projects"
       className=" min-h-screen flex flex-col items-center justify-center gap-10"
     >
-      <h1 style={{ color: "white" }} className="text-5xl">
+      <motion.h1
+        style={{ color: "white" }}
+        className="text-5xl"
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
         Projects
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
+      </motion.h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
         {Data.map((item, index) => (
-          <div
+          <motion.div
             key={index}
             className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-6 flex flex-col justify-between min-h-[200px]"
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
+              transition: { duration: 0.3 },
+            }}
           >
             <div className="flex flex-col items-start">
               <div
@@ -90,7 +112,7 @@ function Projects() {
                 Code
               </a>
             </div> */}
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

@@ -1,12 +1,26 @@
 import React from "react";
 import { Award, ExternalLink, Calendar, Building2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 function CertCard({ title, organization, date, image, viewLink, id }) {
   return (
-    <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2 group">
+    <motion.div
+      className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 group"
+      whileHover={{
+        y: -8,
+        boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)",
+        transition: { duration: 0.3 },
+      }}
+    >
       {/* Certificate Preview Image */}
       <div className="relative w-full h-64 bg-gray-900 overflow-hidden">
-        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <motion.img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        />
       </div>
 
       {/* Certificate Details */}
@@ -32,17 +46,19 @@ function CertCard({ title, organization, date, image, viewLink, id }) {
         </div>
 
         {/* View Certificate Button */}
-        <a
+        <motion.a
           href={viewLink}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300 group/btn"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           <span>View Certificate</span>
           <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-        </a>
+        </motion.a>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

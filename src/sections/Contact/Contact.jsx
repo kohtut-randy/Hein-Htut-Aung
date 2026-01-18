@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 function Contact() {
   const [copiedIdx, setCopiedIdx] = useState(null);
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
 
   const handleContactClick = (contact, idx) => {
     // Copy to clipboard
@@ -17,22 +23,56 @@ function Contact() {
 
   return (
     <section
+      ref={ref}
       id="contact"
       className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-[#181E2A] to-[#1A1832] text-white gap-10"
     >
-      <h1 className="text-5xl text-white">Get In Touch</h1>
-      <h2 className="text-3xl font-bold">Let's start a conversation</h2>
-      <p className="mt-4 text-lg">
+      <motion.h1
+        className="text-5xl text-white"
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
+        Get In Touch
+      </motion.h1>
+      <motion.h2
+        className="text-3xl font-bold"
+        initial={{ opacity: 0, y: 30 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        Let's start a conversation
+      </motion.h2>
+      <motion.p
+        className="mt-4 text-lg"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
         I'm always interested in hearing about new projects and opportunities.
         Whether you're a startup looking to build your first product or an
         established company wanting to innovate, I'd love to help.
-      </p>
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      </motion.p>
+      <motion.div
+        className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.6 }}
+      >
         {contacts.map((contact, idx) => (
-          <div
+          <motion.div
             key={idx}
             className="bg-white p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition"
             onClick={() => handleContactClick(contact, idx)}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.7 + idx * 0.1 }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+              transition: { duration: 0.2 },
+            }}
+            whileTap={{ scale: 0.95 }}
           >
             <div className="text-2xl">{contact.icon}</div>
             <div>
@@ -50,9 +90,9 @@ function Contact() {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,5 +1,28 @@
 @import "tailwindcss";
-body {
-    background-color:#111827 ;
+
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  background-color: #111827;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6c63ff, #4a90e2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #8a7fff, #6aa8ff);
+}

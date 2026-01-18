@@ -23,7 +23,7 @@ const Navbar = () => {
   };
   return (
     <motion.nav
-      className="sticky top-0 z-50 w-full hidden md:flex items-center justify-between px-8 py-4 bg-black"
+      className="sticky top-0 z-50 w-full hidden md:flex items-center justify-between px-8 py-4 bg-transparent"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}

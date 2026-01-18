@@ -53,7 +53,7 @@ function Hero() {
           </motion.div>
 
           <motion.h2
-            style={{ color: "#ff0400ff" }}
+            style={{ color: "#4ffcff" }}
             className="text-2xl md:text-3xl font-semibold text-foreground"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -71,7 +71,7 @@ function Hero() {
           </motion.h2>
 
           <motion.p
-            style={{ color: "#15ff00ff" }}
+            style={{ color: "#4ffcff" }}
             className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

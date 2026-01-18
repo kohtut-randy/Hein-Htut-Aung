@@ -5,13 +5,40 @@ import { motion } from "framer-motion";
 function CertCard({ title, organization, date, image, viewLink, id }) {
   return (
     <motion.div
-      className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 group"
+      className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 group relative"
       whileHover={{
         y: -8,
-        boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)",
+        scale: 1.02,
+        boxShadow: "0 25px 50px rgba(59, 130, 246, 0.4)",
         transition: { duration: 0.3 },
       }}
+      animate={{
+        rotateY: [0, 2, 0, -2, 0],
+      }}
+      transition={{
+        rotateY: {
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        },
+      }}
+      style={{ perspective: 1000 }}
     >
+      {/* Floating sparkle effect */}
+      <motion.div
+        className="absolute top-2 right-2 text-yellow-400/50 text-lg z-10"
+        animate={{
+          scale: [0, 1, 0],
+          rotate: [0, 180, 360],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        ✨
+      </motion.div>
       {/* Certificate Preview Image */}
       <div className="relative w-full h-64 bg-gray-900 overflow-hidden">
         <motion.img

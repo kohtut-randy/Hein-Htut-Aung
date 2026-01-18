@@ -70,8 +70,53 @@ function CertSection() {
     <section
       ref={ref}
       id="certifications"
-      className="h-auto flex flex-col items-center justify-center gap-10 py-20 px-4"
+      className="h-auto flex flex-col items-center justify-center gap-10 py-20 px-4 relative overflow-hidden"
     >
+      {/* Floating award/medal icons */}
+      <motion.div
+        className="absolute top-10 right-10 text-yellow-500/10 text-6xl"
+        animate={{
+          rotate: [0, 10, -10, 0],
+          y: [0, -15, 0],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        🏆
+      </motion.div>
+      <motion.div
+        className="absolute bottom-20 left-10 text-blue-500/10 text-5xl"
+        animate={{
+          rotate: [0, -10, 10, 0],
+          y: [0, 15, 0],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      >
+        🎖️
+      </motion.div>
+      <motion.div
+        className="absolute top-1/2 left-1/4 text-purple-500/10 text-7xl"
+        animate={{
+          scale: [1, 1.1, 1],
+          rotate: [0, 5, -5, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      >
+        ⭐
+      </motion.div>
       <motion.div
         className="text-center max-w-4xl mb-8"
         initial={{ opacity: 0, y: 50 }}

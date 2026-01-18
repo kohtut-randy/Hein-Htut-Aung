@@ -41,8 +41,33 @@ function Projects() {
     <section
       ref={ref}
       id="projects"
-      className=" min-h-screen flex flex-col items-center justify-center gap-10"
+      className="min-h-screen flex flex-col items-center justify-center gap-10 relative overflow-hidden"
     >
+      {/* Animated gradient orbs */}
+      <motion.div
+        className="absolute -top-20 -left-20 w-96 h-96 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute -bottom-20 -right-20 w-96 h-96 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
       <motion.h1
         style={{ color: "white" }}
         className="text-5xl"
@@ -56,16 +81,31 @@ function Projects() {
         {Data.map((item, index) => (
           <motion.div
             key={index}
-            className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-6 flex flex-col justify-between min-h-[200px]"
+            className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-6 flex flex-col justify-between min-h-[200px] relative overflow-hidden"
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{
               scale: 1.05,
-              boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
+              y: -10,
+              boxShadow: "0 25px 50px rgba(124, 58, 237, 0.5)",
               transition: { duration: 0.3 },
             }}
           >
+            {/* Floating corner accent */}
+            <motion.div
+              className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-bl-full"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: index * 0.5,
+              }}
+            />
             <div className="flex flex-col items-start">
               <div
                 style={{ color: "white" }}

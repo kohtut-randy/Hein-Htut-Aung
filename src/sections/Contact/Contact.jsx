@@ -25,8 +25,56 @@ function Contact() {
     <section
       ref={ref}
       id="contact"
-      className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-[#181E2A] to-[#1A1832] text-white gap-10"
+      className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-[#181E2A] to-[#1A1832] text-white gap-10 relative overflow-hidden"
     >
+      {/* Floating connection lines */}
+      <motion.div
+        className="absolute top-1/4 left-10 w-1 h-40 bg-gradient-to-b from-transparent via-purple-500/30 to-transparent"
+        animate={{
+          scaleY: [1, 1.5, 1],
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute top-1/3 right-20 w-40 h-1 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"
+        animate={{
+          scaleX: [1, 1.5, 1],
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      />
+      {/* Floating dots */}
+      {Array.from({ length: 8 }).map((_, i) => (
+        <motion.div
+          key={`dot-${i}`}
+          className="absolute w-2 h-2 bg-cyan-400/40 rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0.2, 0.8, 0.2],
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 3 + Math.random() * 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.3,
+          }}
+        />
+      ))}
       <motion.h1
         className="text-5xl text-white"
         initial={{ opacity: 0, y: 50 }}

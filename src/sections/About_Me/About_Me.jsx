@@ -71,8 +71,35 @@ const About_Me = () => {
     <section
       ref={ref}
       id="about"
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-[#111827] py-16 px-4 gap-8"
+      className="w-full min-h-screen flex flex-col items-center justify-center bg-[#111827] py-16 px-4 gap-8 relative overflow-hidden"
     >
+      {/* Floating decorative circles */}
+      <motion.div
+        className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"
+        animate={{
+          y: [0, -30, 0],
+          x: [0, 20, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-20 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"
+        animate={{
+          y: [0, 30, 0],
+          x: [0, -20, 0],
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -124,15 +151,35 @@ const About_Me = () => {
           {features.map((feature, idx) => (
             <motion.div
               key={idx}
-              className="flex items-start gap-4 bg-[#181f2a] rounded-xl p-5 border border-[#232b3a] shadow-md"
+              className="flex items-start gap-4 bg-[#181f2a] rounded-xl p-5 border border-[#232b3a] shadow-md relative overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.6 + idx * 0.1 }}
               whileHover={{
-                scale: 1.03,
-                boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+                scale: 1.05,
+                y: -5,
+                boxShadow: "0 15px 40px rgba(99, 102, 241, 0.4)",
+                transition: { duration: 0.3 },
               }}
             >
+              {/* Floating icon background */}
+              <motion.div
+                className="absolute -top-2 -right-2 text-indigo-500/10"
+                animate={{
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.1, 0.9, 1],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: idx * 0.5,
+                }}
+              >
+                <svg width="60" height="60" fill="currentColor">
+                  <circle cx="30" cy="30" r="25" />
+                </svg>
+              </motion.div>
               <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#232b3a] rounded-lg">
                 {feature.icon}
               </div>

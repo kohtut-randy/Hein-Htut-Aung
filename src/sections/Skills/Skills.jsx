@@ -89,8 +89,69 @@ function Skills() {
     <section
       ref={sectionRef}
       id="skills"
-      className="bg-[#111827] min-h-screen flex flex-col items-center justify-center gap-5 py-20"
+      className="bg-[#111827] min-h-screen flex flex-col items-center justify-center gap-5 py-20 relative overflow-hidden"
     >
+      {/* Floating code symbols */}
+      <motion.div
+        className="absolute top-20 left-10 text-6xl text-purple-500/10 font-mono"
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 5, -5, 0],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        {"</>"}
+      </motion.div>
+      <motion.div
+        className="absolute top-40 right-20 text-5xl text-blue-500/10 font-mono"
+        animate={{
+          y: [0, 20, 0],
+          rotate: [0, -5, 5, 0],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      >
+        {"{ }"}
+      </motion.div>
+      <motion.div
+        className="absolute bottom-40 left-1/4 text-7xl text-cyan-500/10 font-mono"
+        animate={{
+          y: [0, -15, 0],
+          x: [0, 10, 0],
+          rotate: [0, 10, -10, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      >
+        {"()"}
+      </motion.div>
+      <motion.div
+        className="absolute bottom-20 right-1/4 text-6xl text-pink-500/10 font-mono"
+        animate={{
+          y: [0, 15, 0],
+          rotate: [0, -10, 10, 0],
+        }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
+      >
+        {"[]"}
+      </motion.div>
       <motion.h1
         ref={titleRef}
         style={{ color: "white" }}

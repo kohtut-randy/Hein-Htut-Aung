@@ -7,7 +7,6 @@ import Smart from "../../assets/Smart.png";
 
 const Data = [
   {
-    initial: "N",
     header: "NBA Team Manager",
     description:
       "NBA Team Manager is a Next.js + Redux web app for creating custom NBA teams, managing rosters, and assigning real players via the balldontlie API.",
@@ -17,7 +16,6 @@ const Data = [
     image: NBA, // You'll need to add actual certificate images
   },
   {
-    initial: "S",
     header: "Smarter HR",
     description:
       "A modern HRIS frontend application built with React, TypeScript, Redux, MUI, and Ant Design. It provides scalable and maintainable solutions for enterprise HR management.",
@@ -27,7 +25,6 @@ const Data = [
     image: Smarter, // You'll need to add actual certificate images
   },
   {
-    initial: "S",
     header: "Smart HR",
     description:
       "The Admin Claim module enables administrators to efficiently review and process employee claims. It is built using React, TypeScript, Vite, and Tailwind CSS.",
@@ -122,12 +119,12 @@ function Projects() {
                 />
               </div>
               <div className="flex flex-col items-start">
-                <div
+                {/* <div
                   style={{ color: "white" }}
                   className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4 mt-2"
                 >
                   {item.initial}
-                </div>
+                </div> */}
                 <h2
                   style={{ color: "white" }}
                   className="text-xl font-semibold text-white mb-2"

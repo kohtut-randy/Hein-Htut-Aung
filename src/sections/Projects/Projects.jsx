@@ -112,7 +112,7 @@ function Projects() {
                 delay: index * 0.5,
               }}
             />
-            <div className="flex flex-row items-center justify-center gap-4">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 py-6">
               {/* Project Image */}
               <div className="w-full h-50 overflow-hidden rounded-t-lg mb-4">
                 <img

@@ -1,6 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import NBA from "../../assets/NBA.png";
+import Smarter from "../../assets/Smarter.png";
+import Smart from "../../assets/Smart.png";
 
 const Data = [
   {
@@ -11,6 +14,7 @@ const Data = [
     tech: ["Next.js", "Redux", "CSS3", "JavaScript"],
     liveDemo: "#",
     code: "#",
+    image: NBA, // You'll need to add actual certificate images
   },
   {
     initial: "S",
@@ -20,6 +24,7 @@ const Data = [
     tech: ["React", "TypeScript", "Redux", "MUI", "Ant Design"],
     liveDemo: "#",
     code: "#",
+    image: Smarter, // You'll need to add actual certificate images
   },
   {
     initial: "S",
@@ -29,6 +34,7 @@ const Data = [
     tech: ["React", "TypeScript", "Vite", "Tailwind CSS"],
     liveDemo: "#",
     code: "#",
+    image: Smart, // You'll need to add actual certificate images
   },
 ];
 function Projects() {
@@ -106,32 +112,42 @@ function Projects() {
                 delay: index * 0.5,
               }}
             />
-            <div className="flex flex-col items-start">
-              <div
-                style={{ color: "white" }}
-                className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4 mt-2"
-              >
-                {item.initial}
+            <div className="flex flex-row items-center justify-center gap-4">
+              {/* Project Image */}
+              <div className="w-full h-50 overflow-hidden rounded-t-lg mb-4">
+                <img
+                  src={item.image}
+                  alt={item.header}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <h2
-                style={{ color: "white" }}
-                className="text-xl font-semibold text-white mb-2"
-              >
-                {item.header}
-              </h2>
-              <p style={{ color: "white" }} className="text-gray-300 mb-4">
-                {item.description}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {item.tech.map((tech, i) => (
-                  <span
-                    style={{ color: "white" }}
-                    key={i}
-                    className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff]"
-                  >
-                    {tech}
-                  </span>
-                ))}
+              <div className="flex flex-col items-start">
+                <div
+                  style={{ color: "white" }}
+                  className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4 mt-2"
+                >
+                  {item.initial}
+                </div>
+                <h2
+                  style={{ color: "white" }}
+                  className="text-xl font-semibold text-white mb-2"
+                >
+                  {item.header}
+                </h2>
+                <p style={{ color: "white" }} className="text-gray-300 mb-4">
+                  {item.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {item.tech.map((tech, i) => (
+                    <span
+                      style={{ color: "white" }}
+                      key={i}
+                      className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
             {/* <div className="flex gap-4 mt-auto">

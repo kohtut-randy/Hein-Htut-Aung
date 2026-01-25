@@ -1,20 +1,14 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import TextReveal from "../../common/TextReveal";
 import NBA from "../../assets/NBA.png";
 import Smarter from "../../assets/Smarter.png";
 import Smart from "../../assets/Smart.png";
+import Supabase from "../../assets/Supabase.png";
+import Chatbot from "../../assets/chatbot.png";
 
 const Data = [
-  {
-    header: "NBA Team Manager",
-    description:
-      "NBA Team Manager is a Next.js + Redux web app for creating custom NBA teams, managing rosters, and assigning real players via the balldontlie API.",
-    tech: ["Next.js", "Redux", "CSS3", "JavaScript"],
-    liveDemo: "#",
-    code: "#",
-    image: NBA, // You'll need to add actual certificate images
-  },
   {
     header: "Smarter HR",
     description:
@@ -33,6 +27,33 @@ const Data = [
     code: "#",
     image: Smart, // You'll need to add actual certificate images
   },
+  {
+    header: "NBA Team Manager",
+    description:
+      "NBA Team Manager is a Next.js + Redux web app for creating custom NBA teams, managing rosters, and assigning real players via the balldontlie API.",
+    tech: ["Next.js", "Redux", "CSS3", "JavaScript"],
+    liveDemo: "#",
+    code: "#",
+    image: NBA, // You'll need to add actual certificate images
+  },
+  {
+    header: "Supabase Project",
+    description:
+      "Supabase CRUD Todo Application is a modern, full-stack task management application that demonstrates complete CRUD (Create, Read, Update, Delete) operations using Supabase as the backend. This lightweight yet powerful todo app allows users to efficiently manage their daily tasks with a clean, intuitive interface. Users can add new tasks with optional due dates, mark tasks as complete, and delete completed items. The application features real-time data persistence through Supabase's PostgreSQL database, ensuring tasks are always synchronized and available across sessions.",
+    tech: ["Supabase", "React", "Vite"],
+    liveDemo: "#",
+    code: "#",
+    image: Supabase, // You'll need to add actual certificate images
+  },
+  {
+    header: "React Chatbot with Gemini API",
+    description:
+      "This project is a lightweight, beginner-friendly React template that integrates Google’s Gemini API to create a real-time conversational chatbot. It features a responsive UI for dynamic message handling and state management, allowing developers to easily customize the AI's persona for specific use cases like customer support or virtual assistants.",
+    tech: ["Google Gemini API", "React", "Tailwind"],
+    liveDemo: "#",
+    code: "#",
+    image: Chatbot, // You'll need to add actual certificate images
+  },
 ];
 function Projects() {
   const [ref, inView] = useInView({
@@ -40,11 +61,47 @@ function Projects() {
     threshold: 0.1,
   });
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const nextSlide = () => {
+    setDirection(1);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % Data.length);
+  };
+
+  const prevSlide = () => {
+    setDirection(-1);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + Data.length) % Data.length);
+  };
+
+  const goToSlide = (index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  };
+
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+      scale: 0.8,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -1000 : 1000,
+      opacity: 0,
+      scale: 0.8,
+    }),
+  };
+
   return (
     <section
       ref={ref}
       id="projects"
-      className="min-h-screen flex flex-col items-center justify-center gap-10 relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center gap-10 relative overflow-hidden pt-20"
     >
       {/* Animated gradient orbs */}
       <motion.div
@@ -73,99 +130,151 @@ function Projects() {
       />
       <motion.h1
         style={{ color: "white" }}
-        className="text-5xl"
+        className="text-3xl md:text-4xl lg:text-5xl font-bold px-4"
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
       >
         Projects
       </motion.h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
-        {Data.map((item, index) => (
-          <motion.div
-            key={index}
-            className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-6 flex flex-col justify-between min-h-[200px] relative overflow-hidden"
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{
-              scale: 1.05,
-              y: -10,
-              boxShadow: "0 25px 50px rgba(124, 58, 237, 0.5)",
-              transition: { duration: 0.3 },
-            }}
+      <TextReveal className="text-gray-400 text-base md:text-lg lg:text-xl max-w-2xl text-center px-4">
+        Showcasing my recent work and creative solutions
+      </TextReveal>
+
+      {/* Carousel Container */}
+      <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center">
+        {/* Previous Button */}
+        <motion.button
+          onClick={prevSlide}
+          className="absolute left-0 md:left-2 z-10 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-2 md:p-3 lg:p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            {/* Floating corner accent */}
-            <motion.div
-              className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-bl-full"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: index * 0.5,
-              }}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
             />
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 py-6">
-              {/* Project Image */}
-              <div className="w-full h-50 overflow-hidden rounded-t-lg mb-4">
-                <img
-                  src={item.image}
-                  alt={item.header}
-                  className="w-full h-full object-cover"
+          </svg>
+        </motion.button>
+
+        {/* Carousel Slide */}
+        <div className="w-full overflow-hidden px-10 md:px-12 lg:px-16">
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.5 },
+                scale: { duration: 0.5 },
+              }}
+              className="w-full"
+            >
+              <div className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-3 md:px-4 lg:px-6 flex flex-col justify-between min-h-[350px] md:min-h-[400px] relative overflow-hidden mx-auto max-w-4xl">
+                {/* Floating corner accent */}
+                <motion.div
+                  className="absolute top-0 right-0 w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-bl-full"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 />
-              </div>
-              <div className="flex flex-col items-start">
-                {/* <div
-                  style={{ color: "white" }}
-                  className="w-16 h-16 flex items-center justify-center rounded-lg bg-[#2d2d5a] text-5xl font-bold text-[#6c63ff] mb-4 mt-2"
-                >
-                  {item.initial}
-                </div> */}
-                <h2
-                  style={{ color: "white" }}
-                  className="text-xl font-semibold text-white mb-2"
-                >
-                  {item.header}
-                </h2>
-                <p style={{ color: "white" }} className="text-gray-300 mb-4">
-                  {item.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {item.tech.map((tech, i) => (
-                    <span
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-4 md:gap-6 py-4 md:py-6 lg:py-8">
+                  {/* Project Image */}
+                  <div className="w-full lg:w-1/2 h-48 md:h-56 lg:h-64 overflow-hidden rounded-lg">
+                    <img
+                      src={Data[currentIndex].image}
+                      alt={Data[currentIndex].header}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col items-start w-full lg:w-1/2">
+                    <h2
                       style={{ color: "white" }}
-                      key={i}
-                      className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff]"
+                      className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-2 md:mb-3"
                     >
-                      {tech}
-                    </span>
-                  ))}
+                      {Data[currentIndex].header}
+                    </h2>
+                    <p
+                      style={{ color: "white" }}
+                      className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base"
+                    >
+                      {Data[currentIndex].description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
+                      {Data[currentIndex].tech.map((tech, i) => (
+                        <span
+                          style={{ color: "white" }}
+                          key={i}
+                          className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff] transition-opacity hover:opacity-70"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* <div className="flex gap-4 mt-auto">
-              <a
-                href={item.liveDemo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#6c63ff] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#5548c8] transition"
-              >
-                Live Demo
-              </a>
-              <a
-                href={item.code}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-transparent border border-[#6c63ff] text-[#6c63ff] px-4 py-2 rounded-lg font-medium hover:bg-[#23235b] hover:text-white transition"
-              >
-                Code
-              </a>
-            </div> */}
-          </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Next Button */}
+        <motion.button
+          onClick={nextSlide}
+          className="absolute right-0 md:right-2 z-10 bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-2 md:p-3 lg:p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </motion.button>
+      </div>
+
+      {/* Carousel Dots Indicator */}
+      <div className="flex gap-3 mt-6">
+        {Data.map((_, index) => (
+          <motion.button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === currentIndex
+                ? "bg-gradient-to-r from-purple-600 to-pink-600 w-8"
+                : "bg-gray-500"
+            }`}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+          />
         ))}
       </div>
     </section>

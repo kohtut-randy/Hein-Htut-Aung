@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import MagneticButton from "./MagneticButton";
 // import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -28,7 +29,7 @@ const Navbar = () => {
     <>
       {/* Desktop Navbar */}
       <motion.nav
-        className="sticky top-0 z-50 w-full hidden md:flex items-center justify-between px-8 py-4 bg-transparent"
+        className="sticky top-0 z-50 w-full hidden md:flex items-center justify-between px-8 py-4 bg-[#111827]/80 backdrop-blur-lg border-b border-purple-500/10"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -43,57 +44,44 @@ const Navbar = () => {
         </motion.button>
         <ul className="flex space-x-10 text-gray-300 text-lg font-medium">
           <li>
-            <motion.button
+            <MagneticButton
               onClick={() => scrollToSection("about")}
               className="text-muted-foreground hover:text-foreground transition-colors"
-              whileHover={{ scale: 1.1, color: "#ffffff" }}
-              whileTap={{ scale: 0.95 }}
             >
               About
-            </motion.button>
+            </MagneticButton>
           </li>
           <li>
-            <motion.button
+            <MagneticButton
               onClick={() => scrollToSection("projects")}
               className="text-muted-foreground hover:text-foreground transition-colors"
-              whileHover={{ scale: 1.1, color: "#ffffff" }}
-              whileTap={{ scale: 0.95 }}
             >
               Projects
-            </motion.button>
+            </MagneticButton>
           </li>
           <li>
-            <motion.button
+            <MagneticButton
               onClick={() => scrollToSection("skills")}
               className="text-muted-foreground hover:text-foreground transition-colors"
-              whileHover={{ scale: 1.1, color: "#ffffff" }}
-              whileTap={{ scale: 0.95 }}
             >
               Skills
-            </motion.button>
+            </MagneticButton>
           </li>
           <li>
-            <motion.button
+            <MagneticButton
               onClick={() => scrollToSection("certifications")}
               className="text-muted-foreground hover:text-foreground transition-colors"
-              whileHover={{ scale: 1.1, color: "#ffffff" }}
-              whileTap={{ scale: 0.95 }}
             >
               Certification
-            </motion.button>
+            </MagneticButton>
           </li>
         </ul>
-        <motion.button
+        <MagneticButton
           onClick={() => scrollToSection("contact")}
-          className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-md"
-          whileHover={{
-            scale: 1.05,
-            boxShadow: "0 10px 20px rgba(138, 43, 226, 0.4)",
-          }}
-          whileTap={{ scale: 0.95 }}
+          className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-md hover:shadow-purple-500/50"
         >
           Hire Me
-        </motion.button>
+        </MagneticButton>
       </motion.nav>
 
       {/* Mobile Header with Hamburger */}

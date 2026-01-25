@@ -2,62 +2,74 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const features = [
+const stats = [
+  { number: "3+", label: "Years Experience" },
+  // { number: "20+", label: "Projects Completed" },
+  { number: "100%", label: "Client Satisfaction" },
+];
+
+const expertise = [
   {
     icon: (
       <svg
-        width="24"
-        height="24"
+        className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-indigo-400"
+        viewBox="0 0 24 24"
       >
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <path d="M9 9h6v6H9z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+        />
       </svg>
     ),
-    title: "Clean Code",
-    desc: "Writing maintainable, scalable, and well-documented code that stands the test of time.",
+    title: "Frontend Development",
+    skills: ["React.js", "Next.js", "TypeScript", "Tailwind CSS"],
   },
+  // {
+  //   icon: (
+  //     <svg
+  //       className="w-6 h-6"
+  //       fill="none"
+  //       stroke="currentColor"
+  //       strokeWidth="2"
+  //       viewBox="0 0 24 24"
+  //     >
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+  //       />
+  //     </svg>
+  //   ),
+  //   title: "UI/UX Design",
+  //   skills: [
+  //     "Responsive Design",
+  //     "Design Systems",
+  //     "User Experience",
+  //     "Prototyping",
+  //   ],
+  // },
   {
     icon: (
       <svg
-        width="24"
-        height="24"
+        className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-indigo-400"
+        viewBox="0 0 24 24"
       >
-        <circle cx="12" cy="12" r="10" />
-        <path d="M8 12h8M12 8v8" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
       </svg>
     ),
-    title: "Design Systems",
-    desc: "Creating cohesive design systems that ensure consistency across all user touchpoints.",
-  },
-  {
-    icon: (
-      <svg
-        width="24"
-        height="24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-indigo-400"
-      >
-        <path d="M3 12h18M12 3v18" />
-      </svg>
-    ),
-    title: "Performance",
-    desc: "Optimizing applications for speed, accessibility, and excellent user experience.",
+    title: "Performance Optimization",
+    skills: ["Code Splitting", "SEO", "Web Vitals", "Accessibility"],
   },
 ];
 
@@ -71,132 +83,200 @@ const About_Me = () => {
     <section
       ref={ref}
       id="about"
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-[#111827] py-16 px-4 gap-8 relative overflow-hidden"
+      className="w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#0f172a] to-[#1e293b] py-20 px-4 relative overflow-hidden"
     >
-      {/* Floating decorative circles */}
+      {/* Subtle Background Grid */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div>
+
+      {/* Gradient Orbs */}
       <motion.div
-        className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"
-        animate={{
-          y: [0, -30, 0],
-          x: [0, 20, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.2, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-20 right-20 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"
-        animate={{
-          y: [0, 30, 0],
-          x: [0, -20, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.3, 0.2] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-      >
-        <h1
-          style={{ color: "white", marginBottom: "30px" }}
-          className="text-5xl"
-        >
-          About Me
-        </h1>
-      </motion.div>
-      <div className="max-w-6xl w-full flex flex-col md:flex-row gap-10 md:gap-20">
-        {/* Left: Intro */}
+
+      <div className="max-w-7xl w-full mx-auto relative z-10">
+        {/* Section Header */}
         <motion.div
-          className="flex-1 text-white"
-          initial={{ opacity: 0, x: -50 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          <h2
-            style={{ color: "white" }}
-            className="text-2xl md:text-3xl font-bold mb-4"
+          {/* <motion.span
+            className="text-blue-400 font-semibold text-sm tracking-wider uppercase mb-2 block"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Passionate about creating exceptional digital experiences
+            Get to Know Me
+          </motion.span> */}
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            About Me
           </h2>
-          <p
-            style={{ color: "white" }}
-            className="text-gray-300 mb-6 leading-relaxed"
-          >
-            Frontend Developer with 3 years of professional experience in
-            designing and building scalable, user-friendly web applications.
-            Skilled in React.js, Next.js, TypeScript, and modern UI frameworks
-            with proven expertise in creating intuitive interfaces and seamless
-            user interactions. Strong background in HRIS systems, task
-            management applications, and full-stack development. Adept at
-            collaborating with cross-functional teams to deliver high-quality
-            solutions that improve business operations and enhance user
-            satisfaction.
-          </p>
+          <motion.div
+            className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"
+            initial={{ width: 0 }}
+            animate={inView ? { width: 80 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
         </motion.div>
-        {/* Right: Features */}
-        <motion.div
-          className="flex-1 flex flex-col gap-4"
-          initial={{ opacity: 0, x: 50 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          {features.map((feature, idx) => (
-            <motion.div
-              key={idx}
-              className="flex items-start gap-4 bg-[#181f2a] rounded-xl p-5 border border-[#232b3a] shadow-md relative overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.6 + idx * 0.1 }}
-              whileHover={{
-                scale: 1.05,
-                y: -5,
-                boxShadow: "0 15px 40px rgba(99, 102, 241, 0.4)",
-                transition: { duration: 0.3 },
-              }}
-            >
-              {/* Floating icon background */}
+
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          {/* Left: Professional Summary */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 shadow-xl">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Frontend Developer & UI Engineer
+              </h3>
+              <p className="text-slate-300 leading-relaxed mb-6">
+                With{" "}
+                <span className="text-blue-400 font-semibold">
+                  3 years of professional experience
+                </span>
+                , I specialize in crafting scalable, performant web applications
+                that prioritize user experience and code quality.
+              </p>
+              <p className="text-slate-300 leading-relaxed mb-6">
+                My expertise spans across{" "}
+                <span className="text-blue-400 font-semibold">
+                  React.js, Next.js, TypeScript
+                </span>
+                , and modern frontend technologies. I've successfully delivered
+                enterprise-level HRIS systems, task management platforms, and
+                full-stack solutions that streamline business operations.
+              </p>
+              <p className="text-slate-300 leading-relaxed">
+                I'm passionate about writing clean, maintainable code and
+                creating intuitive interfaces that solve real-world problems. My
+                approach combines technical excellence with strong collaboration
+                skills to deliver exceptional results.
+              </p>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4">
+              {stats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
+                  whileHover={{
+                    scale: 1.05,
+                    borderColor: "rgba(59, 130, 246, 0.5)",
+                  }}
+                >
+                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    {stat.number}
+                  </div>
+                  <div className="text-slate-400 text-sm mt-1">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right: Expertise Areas */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="space-y-4"
+          >
+            {expertise.map((item, idx) => (
               <motion.div
-                className="absolute -top-2 -right-2 text-indigo-500/10"
-                animate={{
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.1, 0.9, 1],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: idx * 0.5,
+                key={idx}
+                className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-300 group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.6 + idx * 0.15 }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.15)",
                 }}
               >
-                <svg width="60" height="60" fill="currentColor">
-                  <circle cx="30" cy="30" r="25" />
-                </svg>
+                <div className="flex items-start gap-4">
+                  <motion.div
+                    className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white shadow-lg"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    {item.icon}
+                  </motion.div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                      {item.title}
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {item.skills.map((skill, skillIdx) => (
+                        <span
+                          key={skillIdx}
+                          className="px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full border border-slate-600/50 hover:border-blue-500/50 hover:text-blue-400 transition-all duration-200"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </motion.div>
-              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#232b3a] rounded-lg">
-                {feature.icon}
-              </div>
-              <div>
-                <h3
-                  style={{ color: "white" }}
-                  className="text-lg font-semibold text-white mb-1"
-                >
-                  {feature.title}
-                </h3>
-                <p style={{ color: "white" }} className="text-gray-400 text-sm">
-                  {feature.desc}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Core Values */}
+        {/* <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.9 }}
+          className="bg-gradient-to-r from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8"
+        >
+          <h3 className="text-2xl font-bold text-white mb-6 text-center">
+            Core Principles
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Quality First",
+                desc: "Delivering excellence through attention to detail and best practices",
+              },
+              {
+                title: "Continuous Learning",
+                desc: "Staying current with the latest technologies and industry trends",
+              },
+              {
+                title: "Collaborative Approach",
+                desc: "Working effectively with teams to achieve common goals",
+              },
+            ].map((value, idx) => (
+              <motion.div
+                key={idx}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1 + idx * 0.1 }}
+              >
+                <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-3"></div>
+                <h4 className="text-white font-semibold mb-2">{value.title}</h4>
+                <p className="text-slate-400 text-sm">{value.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div> */}
       </div>
     </section>
   );

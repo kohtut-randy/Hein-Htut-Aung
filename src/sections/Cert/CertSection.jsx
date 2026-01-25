@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import CertCard from "./CertCard";
 import { Award } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import fecert from "../../assets/frontend_developer_react certificate.jpg";
 import basic from "../../assets/javascript_basic certificate.jpg";
@@ -66,6 +66,45 @@ function CertSection() {
     threshold: 0.1,
   });
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const nextSlide = () => {
+    setDirection(1);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % certifications.length);
+  };
+
+  const prevSlide = () => {
+    setDirection(-1);
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + certifications.length) % certifications.length,
+    );
+  };
+
+  const goToSlide = (index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  };
+
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+      scale: 0.8,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -1000 : 1000,
+      opacity: 0,
+      scale: 0.8,
+    }),
+  };
+
   return (
     <section
       ref={ref}
@@ -123,25 +162,102 @@ function CertSection() {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 md:mb-4 px-4">
           Certifications & Credentials
         </h1>
-        <p className="text-gray-400 text-lg">
+        <p className="text-gray-400 text-base md:text-lg px-4">
           Continuous learning and professional growth through
           industry-recognized certifications
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full px-4">
-        {certifications.map((cert, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+      {/* Carousel Container */}
+      <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center">
+        {/* Previous Button */}
+        <motion.button
+          onClick={prevSlide}
+          className="absolute left-0 md:left-2 z-10 bg-gradient-to-r from-yellow-600 to-orange-600 text-white p-2 md:p-3 lg:p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            <CertCard {...cert} />
-          </motion.div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </motion.button>
+
+        {/* Carousel Slide */}
+        <div className="w-full overflow-hidden px-10 md:px-12 lg:px-16">
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.5 },
+                scale: { duration: 0.5 },
+              }}
+              className="w-full flex justify-center"
+            >
+              <div className="max-w-4xl w-full">
+                <CertCard {...certifications[currentIndex]} />
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Next Button */}
+        <motion.button
+          onClick={nextSlide}
+          className="absolute right-0 md:right-2 z-10 bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-2 md:p-3 lg:p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </motion.button>
+      </div>
+
+      {/* Carousel Dots Indicator */}
+      <div className="flex gap-2 md:gap-3 mt-6 md:mt-8 flex-wrap justify-center max-w-md px-4">
+        {certifications.map((_, index) => (
+          <motion.button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === currentIndex
+                ? "bg-gradient-to-r from-yellow-600 to-orange-600 w-8"
+                : "bg-gray-500"
+            }`}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+          />
         ))}
       </div>
     </section>

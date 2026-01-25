@@ -39,7 +39,7 @@ const Data = [
   {
     header: "Supabase Project",
     description:
-      "Supabase CRUD Todo Application is a modern, full-stack task management application that demonstrates complete CRUD (Create, Read, Update, Delete) operations using Supabase as the backend. This lightweight yet powerful todo app allows users to efficiently manage their daily tasks with a clean, intuitive interface. Users can add new tasks with optional due dates, mark tasks as complete, and delete completed items. The application features real-time data persistence through Supabase's PostgreSQL database, ensuring tasks are always synchronized and available across sessions.",
+      "Supabase CRUD Todo Application is a modern, full-stack task manager featuring complete Create, Read, Update, and Delete capabilities. It pairs an intuitive user interface with a Supabase PostgreSQL backend to provide real-time data persistence and seamless task synchronization across sessions.",
     tech: ["Supabase", "React", "Vite"],
     liveDemo: "#",
     code: "#",

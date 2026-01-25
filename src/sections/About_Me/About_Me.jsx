@@ -138,7 +138,7 @@ const About_Me = () => {
           >
             <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 shadow-xl">
               <h3 className="text-2xl font-bold text-white mb-4">
-                Frontend Developer & UI Engineer
+                Frontend Developer
               </h3>
               <p className="text-slate-300 leading-relaxed mb-6">
                 With{" "}

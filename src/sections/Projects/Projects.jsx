@@ -213,7 +213,7 @@ function Projects() {
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           <div className="flex items-center gap-2">
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
               fill="none"
@@ -226,8 +226,10 @@ function Projects() {
                 strokeWidth={2}
                 d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
               />
-            </svg>
-            <span className="mb-2">Scroll or swipe to navigate</span>
+            </svg> */}
+            <span className="mb-2 text-xs md:text-2xl">
+              Scroll or swipe to navigate
+            </span>
           </div>
         </motion.div>
 

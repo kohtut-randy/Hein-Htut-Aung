@@ -166,28 +166,6 @@ const About_Me = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              {stats.map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
-                  whileHover={{
-                    scale: 1.05,
-                    borderColor: "rgba(59, 130, 246, 0.5)",
-                  }}
-                >
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    {stat.number}
-                  </div>
-                  <div className="text-slate-400 text-sm mt-1">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
 
           {/* Right: Expertise Areas */}
@@ -235,6 +213,28 @@ const About_Me = () => {
                 </div>
               </motion.div>
             ))}
+            <div className="grid grid-cols-3 gap-4">
+              {stats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
+                  whileHover={{
+                    scale: 1.05,
+                    borderColor: "rgba(59, 130, 246, 0.5)",
+                  }}
+                >
+                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    {stat.number}
+                  </div>
+                  <div className="text-slate-400 text-sm mt-1">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
 

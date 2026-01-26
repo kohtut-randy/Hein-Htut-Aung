@@ -151,8 +151,8 @@ function Hero() {
                   words={[
                     "Frontend Developer",
                     // "UI/UX Engineer",
-                    "React Specialist",
-                    "Problem Solver",
+                    // "React Specialist",
+                    // "Problem Solver",
                   ]}
                   loop={true}
                   cursor
@@ -239,7 +239,7 @@ function Hero() {
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
+          className="hidden md:absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.8 }}

@@ -68,6 +68,9 @@ function CertSection() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const carouselRef = React.useRef(null);
+  const touchStartX = React.useRef(0);
+  const touchEndX = React.useRef(0);
 
   const nextSlide = () => {
     setDirection(1);
@@ -85,6 +88,59 @@ function CertSection() {
   const goToSlide = (index) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
+  };
+
+  // Handle wheel scroll
+  React.useEffect(() => {
+    const handleWheel = (e) => {
+      if (!carouselRef.current) return;
+
+      const rect = carouselRef.current.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+      if (!isInView) return;
+
+      e.preventDefault();
+
+      if (e.deltaY > 0) {
+        nextSlide();
+      } else if (e.deltaY < 0) {
+        prevSlide();
+      }
+    };
+
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener("wheel", handleWheel, { passive: false });
+    }
+
+    return () => {
+      if (carousel) {
+        carousel.removeEventListener("wheel", handleWheel);
+      }
+    };
+  }, [currentIndex]);
+
+  // Handle touch swipe
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50;
+    const swipeDistance = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
   };
 
   const slideVariants = {
@@ -172,32 +228,41 @@ function CertSection() {
       </motion.div>
 
       {/* Carousel Container */}
-      <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center">
-        {/* Previous Button */}
-        <motion.button
-          onClick={prevSlide}
-          className="absolute left-0 md:left-2 z-10 bg-gradient-to-r from-yellow-600 to-orange-600 text-white p-2 md:p-3 lg:p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+      <div
+        ref={carouselRef}
+        className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Scroll Hint */}
+        <motion.div
+          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 text-gray-400 text-sm opacity-70"
+          initial={{ opacity: 0, y: -10 }}
+          animate={inView ? { opacity: 0.7, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </motion.button>
+          <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
+              />
+            </svg>
+            <span className="mb-2">Scroll or swipe to navigate</span>
+          </div>
+        </motion.div>
 
         {/* Carousel Slide */}
-        <div className="w-full overflow-hidden px-10 md:px-12 lg:px-16">
+        <div className="w-full overflow-hidden px-4 md:px-6 lg:px-8">
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={currentIndex}
@@ -219,29 +284,6 @@ function CertSection() {
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Next Button */}
-        <motion.button
-          onClick={nextSlide}
-          className="absolute right-0 md:right-2 z-10 bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-2 md:p-3 lg:p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </motion.button>
       </div>
 
       {/* Carousel Dots Indicator */}

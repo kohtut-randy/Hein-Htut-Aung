@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import Footer from "../Footer/Footer";
 
 function Contact() {
   const [copiedIdx, setCopiedIdx] = useState(null);
@@ -23,7 +24,7 @@ function Contact() {
     <section
       ref={ref}
       id="contact"
-      className="relative flex min-h-screen flex-col items-center justify-center px-6 py-20 bg-gradient-to-br from-[#0F1419] via-[#1A1F2E] to-[#0F1419] text-white overflow-hidden"
+      className="relative flex min-h-screen flex-col items-center justify-center px-6 py-4 bg-gradient-to-br from-[#0F1419] via-[#1A1F2E] to-[#0F1419] text-white overflow-hidden"
     >
       {/* Sophisticated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -180,6 +181,7 @@ function Contact() {
           </div>
         </motion.div> */}
       </div>
+      <Footer />
     </section>
   );
 }

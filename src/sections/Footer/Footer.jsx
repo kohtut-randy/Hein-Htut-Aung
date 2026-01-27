@@ -12,7 +12,7 @@ function Footer() {
     <motion.section
       ref={ref}
       id="footer"
-      className="bg-[#111827] flex flex-row align-center justify-center"
+      className="bg-transparent flex flex-row align-center justify-center"
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.6 }}
@@ -23,7 +23,8 @@ function Footer() {
         animate={inView ? { y: 0, opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        &copy; 2024 Hein Htut Aung. <br />
+        &copy; {new Date().getFullYear()}
+        Hein Htut Aung. <br />
         All rights reserved.
       </motion.p>
     </motion.section>

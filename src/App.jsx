@@ -10,6 +10,7 @@ import CustomCursor from "./common/CustomCursor";
 import SectionIndicator from "./common/SectionIndicator";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Footer from "./sections/Footer/Footer";
 
 function App() {
   const { scrollYProgress } = useScroll();
@@ -81,6 +82,7 @@ function App() {
         <Skills />
         <CertificateSection />
         <Contact />
+        <Footer />
         {/* <Routes>
         <Route path="/about" element={<About_Me />} />
         <Route path="/skills" element={<Skills />} />

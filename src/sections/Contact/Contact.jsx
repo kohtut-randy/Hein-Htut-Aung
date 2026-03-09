@@ -24,7 +24,11 @@ function Contact() {
     <section
       ref={ref}
       id="contact"
-      className="relative flex min-h-screen flex-col items-center justify-center px-6 py-4 bg-gradient-to-br from-[#0F1419] via-[#1A1F2E] to-[#0F1419] text-white overflow-hidden"
+      // make the section exactly one viewport tall and account for the
+      // sticky navbar by adding a scroll margin. using `h-screen` ensures
+      // the element occupies 100vh; `min-h-screen` can be kept as a
+      // fallback if the content grows taller on very small viewports.
+      className="relative flex h-screen min-h-screen flex-col items-center justify-center px-6 py-2 bg-gradient-to-br from-[#0F1419] via-[#1A1F2E] to-[#0F1419] text-white overflow-hidden scroll-mt-16"
     >
       {/* Sophisticated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -82,7 +86,7 @@ function Contact() {
           </motion.div> */}
 
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -181,7 +185,7 @@ function Contact() {
           </div>
         </motion.div> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </section>
   );
 }

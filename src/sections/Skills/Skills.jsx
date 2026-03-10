@@ -9,9 +9,6 @@ function Skills() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const sectionRef = useRef(null);
-  const carouselRef = useRef(null);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
   const [titleRef, titleInView] = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -101,59 +98,6 @@ function Skills() {
   const goToSlide = (index) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
-  };
-
-  // Handle wheel scroll
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (!carouselRef.current) return;
-
-      const rect = carouselRef.current.getBoundingClientRect();
-      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-      if (!isInView) return;
-
-      e.preventDefault();
-
-      if (e.deltaY > 0) {
-        nextSlide();
-      } else if (e.deltaY < 0) {
-        prevSlide();
-      }
-    };
-
-    const carousel = carouselRef.current;
-    if (carousel) {
-      carousel.addEventListener("wheel", handleWheel, { passive: false });
-    }
-
-    return () => {
-      if (carousel) {
-        carousel.removeEventListener("wheel", handleWheel);
-      }
-    };
-  }, [currentIndex]);
-
-  // Handle touch swipe
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const swipeThreshold = 50;
-    const swipeDistance = touchStartX.current - touchEndX.current;
-
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-      if (swipeDistance > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
   };
 
   const slideVariants = {
@@ -288,13 +232,22 @@ function Skills() {
       </motion.p>
 
       {/* Carousel Container */}
-      <div
-        ref={carouselRef}
-        className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center mt-10"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
+      <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center mt-10">
+        {/* navigation buttons */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2"
+          aria-label="Previous skill category"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2"
+          aria-label="Next skill category"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
         {/* Scroll Hint */}
         <motion.div
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 text-gray-400 text-sm opacity-70"
@@ -318,7 +271,7 @@ function Skills() {
               />
             </svg> */}
             <span className="mb-4 text-xs md:text-sm">
-              Scroll or swipe to navigate
+              Use the arrows to navigate
             </span>
           </div>
         </motion.div>

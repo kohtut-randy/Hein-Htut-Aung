@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import TextReveal from "../../common/TextReveal";
@@ -8,6 +8,7 @@ import Smart from "../../assets/Smart.png";
 import Supabase from "../../assets/Supabase.png";
 import Chatbot from "../../assets/chatbot.png";
 import Meeting from "../../assets/Meeting.png";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Data = [
   {
@@ -82,9 +83,6 @@ function Projects() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const carouselRef = useRef(null);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
 
   const nextSlide = () => {
     setDirection(1);
@@ -99,59 +97,6 @@ function Projects() {
   const goToSlide = (index) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
-  };
-
-  // Handle wheel scroll
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (!carouselRef.current) return;
-
-      const rect = carouselRef.current.getBoundingClientRect();
-      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-      if (!isInView) return;
-
-      e.preventDefault();
-
-      if (e.deltaY > 0) {
-        nextSlide();
-      } else if (e.deltaY < 0) {
-        prevSlide();
-      }
-    };
-
-    const carousel = carouselRef.current;
-    if (carousel) {
-      carousel.addEventListener("wheel", handleWheel, { passive: false });
-    }
-
-    return () => {
-      if (carousel) {
-        carousel.removeEventListener("wheel", handleWheel);
-      }
-    };
-  }, [currentIndex]);
-
-  // Handle touch swipe
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const swipeThreshold = 50;
-    const swipeDistance = touchStartX.current - touchEndX.current;
-
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-      if (swipeDistance > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
   };
 
   const slideVariants = {
@@ -217,40 +162,22 @@ function Projects() {
       </TextReveal>
 
       {/* Carousel Container */}
-      <div
-        ref={carouselRef}
-        className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Scroll Hint - appears briefly */}
-        <motion.div
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 text-gray-400 text-sm opacity-70"
-          initial={{ opacity: 0, y: -10 }}
-          animate={inView ? { opacity: 0.7, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
+      <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center">
+        {/* Navigation buttons */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2"
+          aria-label="Previous project"
         >
-          <div className="flex items-center gap-2">
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-              />
-            </svg> */}
-            <span className="mb-2 text-xs md:text-sm">
-              Scroll or swipe to navigate
-            </span>
-          </div>
-        </motion.div>
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2"
+          aria-label="Next project"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
 
         {/* Carousel Slide */}
         <div className="w-full overflow-hidden px-4 md:px-6 lg:px-8">

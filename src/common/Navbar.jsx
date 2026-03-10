@@ -72,7 +72,7 @@ const Navbar = () => {
               onClick={() => scrollToSection("certifications")}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Certification
+              Certifications
             </MagneticButton>
           </li>
         </ul>
@@ -205,7 +205,7 @@ const Navbar = () => {
                     whileHover={{ x: 10, color: "#ffffff" }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Certification
+                    Certifications
                   </motion.button>
                 </nav>
 

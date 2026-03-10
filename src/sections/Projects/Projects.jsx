@@ -7,6 +7,7 @@ import Smarter from "../../assets/Smarter.png";
 import Smart from "../../assets/Smart.png";
 import Supabase from "../../assets/Supabase.png";
 import Chatbot from "../../assets/chatbot.png";
+import Meeting from "../../assets/Meeting.png";
 
 const Data = [
   {
@@ -16,7 +17,7 @@ const Data = [
     tech: ["React", "TypeScript", "Redux", "MUI", "Ant Design"],
     liveDemo: "#",
     code: "#",
-    image: Smarter, // You'll need to add actual certificate images
+    image: Smarter,
   },
   {
     header: "Smart HR",
@@ -25,7 +26,7 @@ const Data = [
     tech: ["React", "TypeScript", "Vite", "Tailwind CSS"],
     liveDemo: "#",
     code: "#",
-    image: Smart, // You'll need to add actual certificate images
+    image: Smart,
   },
   {
     header: "NBA Team Manager",
@@ -34,7 +35,7 @@ const Data = [
     tech: ["Next.js", "Redux", "CSS3", "JavaScript"],
     liveDemo: "#",
     code: "#",
-    image: NBA, // You'll need to add actual certificate images
+    image: NBA,
   },
   {
     header: "Supabase Project",
@@ -43,7 +44,7 @@ const Data = [
     tech: ["Supabase", "React", "Vite"],
     liveDemo: "#",
     code: "#",
-    image: Supabase, // You'll need to add actual certificate images
+    image: Supabase,
   },
   {
     header: "React Chatbot with Gemini API",
@@ -52,7 +53,25 @@ const Data = [
     tech: ["Google Gemini API", "React", "Tailwind"],
     liveDemo: "#",
     code: "#",
-    image: Chatbot, // You'll need to add actual certificate images
+    image: Chatbot,
+  },
+  {
+    header: "React Chatbot with Gemini API",
+    description:
+      "This project is a lightweight, beginner-friendly React template that integrates Google’s Gemini API to create a real-time conversational chatbot. It features a responsive UI for dynamic message handling and state management, allowing developers to easily customize the AI's persona for specific use cases like customer support or virtual assistants.",
+    tech: ["Google Gemini API", "React", "Tailwind"],
+    liveDemo: "#",
+    code: "#",
+    image: Chatbot,
+  },
+  {
+    header: "Full-Stack Meeting Booking App",
+    description:
+      "This is a modern, web-based platform designed to streamline the management and reservation of meeting spaces for co-working environments and corporate offices.The application allows users to view real-time room availability, browse amenities, and book specific time slots through a secure, user-friendly interface.Built with high-performance tools like React and TypeScript, it features an integrated admin dashboard for managing room listings, scheduling, and user bookings efficiently.",
+    tech: ["React", "Node.js", "PostgreSQL"],
+    liveDemo: "#",
+    code: "#",
+    image: Meeting,
   },
 ];
 function Projects() {

@@ -173,17 +173,17 @@ function CertSection() {
 
       {/* Carousel Container */}
       <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center">
-        {/* navigation buttons */}
+        {/* navigation buttons - Desktop only */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-yellow-600/80 hover:bg-yellow-600 text-white rounded-full p-2"
+          className="hidden md:flex absolute left-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2"
           aria-label="Previous certificate"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-yellow-600/80 hover:bg-yellow-600 text-white rounded-full p-2"
+          className="hidden md:flex absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2"
           aria-label="Next certificate"
         >
           <ChevronRight className="h-5 w-5" />
@@ -242,20 +242,41 @@ function CertSection() {
       </div>
 
       {/* Carousel Dots Indicator */}
-      <div className="flex gap-2 md:gap-3 mt-6 md:mt-8 flex-wrap justify-center max-w-md px-4">
-        {certifications.map((_, index) => (
-          <motion.button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentIndex
-                ? "bg-gradient-to-r from-yellow-600 to-orange-600 w-8"
-                : "bg-gray-500"
-            }`}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-          />
-        ))}
+      <div className="flex gap-2 md:gap-3 mt-6 md:mt-8 items-center justify-center flex-wrap px-4">
+        {/* Mobile Navigation Buttons */}
+        <button
+          onClick={prevSlide}
+          className="md:hidden bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2 z-10"
+          aria-label="Previous project"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+
+        {/* Dots */}
+        <div className="flex gap-2 md:gap-3 flex-wrap justify-center max-w-md">
+          {certifications.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentIndex
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 w-8"
+                  : "bg-gray-500"
+              }`}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+            />
+          ))}
+        </div>
+
+        {/* Mobile Navigation Buttons */}
+        <button
+          onClick={nextSlide}
+          className="md:hidden bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2 z-10"
+          aria-label="Next project"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
       </div>
     </section>
   );

@@ -28,7 +28,7 @@ function Contact() {
       // sticky navbar by adding a scroll margin. using `h-screen` ensures
       // the element occupies 100vh; `min-h-screen` can be kept as a
       // fallback if the content grows taller on very small viewports.
-      className="relative flex h-screen min-h-screen flex-col items-center justify-center px-6 py-2 bg-gradient-to-br from-[#0F1419] via-[#1A1F2E] to-[#0F1419] text-white overflow-hidden scroll-mt-16"
+      className="relative flex md:h-screen min-h-screen flex-col items-center justify-center px-6 py-2 bg-gradient-to-br from-[#0F1419] via-[#1A1F2E] to-[#0F1419] text-white overflow-hidden scroll-mt-16"
     >
       {/* Sophisticated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

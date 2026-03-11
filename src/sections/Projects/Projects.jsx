@@ -56,7 +56,6 @@ const Data = [
     code: "#",
     image: Chatbot,
   },
-
   {
     header: "Full-Stack Meeting Booking App",
     description:

@@ -30,6 +30,19 @@ function Skills() {
       ],
     },
     {
+      title: "Backend & Cloud",
+      color: "#f7971e",
+      gradient: "linear-gradient(90deg, #f7971e 0%, #ffd200 100%)",
+      skills: [
+        { name: "Node.js", level: 50 },
+        { name: "Express", level: 50 },
+        { name: "PostgreSQL", level: 40 },
+        { name: "Vercel", level: 70 },
+        { name: "Railway", level: 60 },
+        { name: "Render", level: 60 },
+      ],
+    },
+    {
       title: "Tools & Libraries",
       color: "#b993f8",
       gradient: "linear-gradient(90deg, #b993f8 0%, #8e54e9 100%)",
@@ -39,17 +52,6 @@ function Skills() {
         { name: "Figma", level: 75 },
         { name: "Framer Motion", level: 65 },
         { name: "React Query", level: 70 },
-      ],
-    },
-    {
-      title: "Backend & Cloud",
-      color: "#f7971e",
-      gradient: "linear-gradient(90deg, #f7971e 0%, #ffd200 100%)",
-      skills: [
-        { name: "Node.js", level: 50 },
-        { name: "Express", level: 50 },
-        { name: "PostgreSQL", level: 40 },
-        { name: "Vercel", level: 70 },
       ],
     },
   ];

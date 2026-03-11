@@ -56,15 +56,7 @@ const Data = [
     code: "#",
     image: Chatbot,
   },
-  {
-    header: "React Chatbot with Gemini API",
-    description:
-      "This project is a lightweight, beginner-friendly React template that integrates Google’s Gemini API to create a real-time conversational chatbot. It features a responsive UI for dynamic message handling and state management, allowing developers to easily customize the AI's persona for specific use cases like customer support or virtual assistants.",
-    tech: ["Google Gemini API", "React", "Tailwind"],
-    liveDemo: "#",
-    code: "#",
-    image: Chatbot,
-  },
+
   {
     header: "Full-Stack Meeting Booking App",
     description:

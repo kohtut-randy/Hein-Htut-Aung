@@ -143,7 +143,7 @@ const About_Me = () => {
               <p className="text-slate-300 leading-relaxed mb-6">
                 With{" "}
                 <span className="text-blue-400 font-semibold">
-                  3 years of professional experience
+                  2+ years of professional experience
                 </span>
                 , I specialize in crafting scalable, performant web applications
                 that prioritize user experience and code quality.

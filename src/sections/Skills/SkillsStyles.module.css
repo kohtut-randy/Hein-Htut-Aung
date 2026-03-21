@@ -21,26 +21,55 @@
 }
 
 .skillsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 2.5rem auto;
+  margin: 0 auto;
 }
 
-.skillsColumn {
-  background: rgba(30, 32, 48, 0.7);
+.skillCard {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.12)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.1);
-  flex: 1;
-  min-width: 260px;
-  max-width: 350px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  padding: 1.35rem 0.9rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+}
+
+.skillCardVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.skillIcon {
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.16)
+  );
+  color: #f9fafb;
+}
+
+.skillName {
+  color: #f8fafc;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 0.96rem;
 }
 
 .columnTitle {
@@ -85,7 +114,9 @@
   width: 100%;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out;
 }
 
 .skillItemVisible {

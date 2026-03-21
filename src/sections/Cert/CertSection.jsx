@@ -9,6 +9,7 @@ import mid from "../../assets/javascript_intermediate certificate.jpg";
 import nodemid from "../../assets/nodejs_intermediate certificate.jpg";
 import rest from "../../assets/rest_api_intermediate certificate.jpg";
 import sql from "../../assets/sql_basic certificate.jpg";
+import { GiChampions } from "react-icons/gi";
 const certifications = [
   {
     id: "D8B3477F254F",
@@ -113,7 +114,7 @@ function CertSection() {
     >
       {/* Floating award/medal icons */}
       <motion.div
-        className="absolute top-10 right-10 text-yellow-500/10 text-6xl"
+        className="absolute top-50 right-10 text-yellow-500/70 text-6xl"
         animate={{
           rotate: [0, 10, -10, 0],
           y: [0, -15, 0],
@@ -127,7 +128,7 @@ function CertSection() {
         🏆
       </motion.div>
       <motion.div
-        className="absolute bottom-20 left-10 text-blue-500/10 text-5xl"
+        className="absolute bottom-50 left-10 text-blue-500/60 text-5xl"
         animate={{
           rotate: [0, -10, 10, 0],
           y: [0, 15, 0],

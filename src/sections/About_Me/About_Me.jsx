@@ -208,7 +208,7 @@ const About_Me = () => {
                     <h4 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors">
                       {item.title}
                     </h4>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {item.skills.map((skill, skillIdx) => (
                         <span
                           key={skillIdx}

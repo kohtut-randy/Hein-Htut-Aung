@@ -6,7 +6,6 @@ import Projects from "./sections/Projects/Projects";
 import Skills from "./sections/Skills/Skills";
 import About_Me from "./sections/About_Me/About_Me";
 import CertificateSection from "./sections/Cert/CertSection";
-import CustomCursor from "./common/CustomCursor";
 import SectionIndicator from "./common/SectionIndicator";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -68,9 +67,8 @@ function App() {
       </AnimatePresence>
 
       {/* <CustomCursor /> */}
-      <SectionIndicator />
+      {/* <SectionIndicator /> */}
       <div className="w-[100%] bg-[#111827] flex flex-col gap 10">
-        {/* Scroll Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-blue-400 to-pink-500 origin-left z-[100]"
           style={{ scaleX }}
@@ -83,12 +81,6 @@ function App() {
         <CertificateSection />
         <Contact />
         <Footer />
-        {/* <Routes>
-        <Route path="/about" element={<About_Me />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes> */}
       </div>
     </>
   );

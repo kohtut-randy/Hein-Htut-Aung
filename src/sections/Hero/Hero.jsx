@@ -176,8 +176,10 @@ function Hero() {
               <span className="text-blue-400 font-semibold">React</span>,{" "}
               <span className="text-blue-400 font-semibold">TypeScript</span>,
               and <span className="text-blue-400 font-semibold">Next.js</span>.
-              Specialized in creating scalable, high-performance solutions that
-              deliver exceptional user experiences.
+              with a strong focus on clean architecture, reusable components,
+              and maintainable code. Specialized in developing high-performance,
+              responsive solutions that deliver exceptional user experiences
+              while meeting business and technical requirements.
             </motion.p>
 
             {/* CTA Buttons */}

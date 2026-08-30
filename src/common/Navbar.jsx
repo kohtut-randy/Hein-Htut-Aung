@@ -7,6 +7,7 @@ import MagneticButton from "./MagneticButton";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,12 +18,37 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => sections.forEach((section) => observer.unobserve(section));
+  }, []);
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const getLinkClass = (sectionId) => {
+    const isActive = activeSection === sectionId;
+    return isActive
+      ? "text-blue-400 font-semibold"
+      : "text-muted-foreground hover:text-foreground";
   };
 
   return (
@@ -46,7 +72,7 @@ const Navbar = () => {
           <li>
             <MagneticButton
               onClick={() => scrollToSection("about")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={`${getLinkClass("about")} transition-colors cursor-pointer`}
             >
               About
             </MagneticButton>
@@ -54,7 +80,7 @@ const Navbar = () => {
           <li>
             <MagneticButton
               onClick={() => scrollToSection("projects")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={`${getLinkClass("projects")} transition-colors cursor-pointer`}
             >
               Projects
             </MagneticButton>
@@ -62,7 +88,7 @@ const Navbar = () => {
           <li>
             <MagneticButton
               onClick={() => scrollToSection("skills")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={`${getLinkClass("skills")} transition-colors cursor-pointer`}
             >
               Skills
             </MagneticButton>
@@ -70,7 +96,7 @@ const Navbar = () => {
           <li>
             <MagneticButton
               onClick={() => scrollToSection("certifications")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={`${getLinkClass("certifications")} transition-colors cursor-pointer`}
             >
               Certifications
             </MagneticButton>
@@ -80,7 +106,7 @@ const Navbar = () => {
           onClick={() => scrollToSection("contact")}
           className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-md hover:shadow-purple-500/50"
         >
-          Hire Me
+          Contact Me
         </MagneticButton>
       </motion.nav>
 
@@ -143,7 +169,7 @@ const Navbar = () => {
 
             {/* Side Panel */}
             <motion.div
-              className="fixed top-0 right-0 h-full w-64 bg-background/95 backdrop-blur-lg z-50 md:hidden shadow-2xl border-l border-purple-500/20"
+              className="fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 backdrop-blur-lg z-50 md:hidden shadow-2xl border-l border-purple-500/30"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -174,35 +200,35 @@ const Navbar = () => {
                 </div>
 
                 {/* Menu Items */}
-                <nav className="flex flex-col space-y-6 flex-1">
+                <nav className="flex flex-col space-y-4 flex-1">
                   <motion.button
                     onClick={() => scrollToSection("about")}
-                    className="text-left text-xl text-gray-300 hover:text-white transition-colors"
-                    whileHover={{ x: 10, color: "#ffffff" }}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "about" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     About
                   </motion.button>
                   <motion.button
                     onClick={() => scrollToSection("projects")}
-                    className="text-left text-xl text-gray-300 hover:text-white transition-colors"
-                    whileHover={{ x: 10, color: "#ffffff" }}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "projects" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Projects
                   </motion.button>
                   <motion.button
                     onClick={() => scrollToSection("skills")}
-                    className="text-left text-xl text-gray-300 hover:text-white transition-colors"
-                    whileHover={{ x: 10, color: "#ffffff" }}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "skills" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Skills
                   </motion.button>
                   <motion.button
                     onClick={() => scrollToSection("certifications")}
-                    className="text-left text-xl text-gray-300 hover:text-white transition-colors"
-                    whileHover={{ x: 10, color: "#ffffff" }}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "certifications" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Certifications
@@ -212,10 +238,11 @@ const Navbar = () => {
                 {/* Hire Me Button */}
                 <motion.button
                   onClick={() => scrollToSection("contact")}
-                  className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-md mt-auto"
+                  className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-lg hover:shadow-purple-500/50 mt-auto transition-all"
                   whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
                 >
-                  Hire Me
+                  Contact Me
                 </motion.button>
               </div>
             </motion.div>

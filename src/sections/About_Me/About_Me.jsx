@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const stats = [
-  { number: "2+", label: "Years Experience" },
+  { number: "3", label: "Years Experience" },
   // { number: "20+", label: "Projects Completed" },
   { number: "100%", label: "Client Satisfaction" },
 ];
@@ -26,7 +26,16 @@ const expertise = [
       </svg>
     ),
     title: "Frontend Development",
-    skills: ["React.js", "Next.js", "TypeScript", "Tailwind CSS"],
+    skills: [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "MUI",
+      "Redux",
+      "React Query",
+      "Vite",
+    ],
   },
   // {
   //   icon: (
@@ -143,7 +152,7 @@ const About_Me = () => {
               <p className="text-slate-300 leading-relaxed mb-6">
                 With{" "}
                 <span className="text-blue-400 font-semibold">
-                  2+ years of professional experience
+                  3 years of professional experience
                 </span>
                 , I specialize in crafting scalable, performant web applications
                 that prioritize user experience and code quality.
@@ -199,11 +208,11 @@ const About_Me = () => {
                     <h4 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors">
                       {item.title}
                     </h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {item.skills.map((skill, skillIdx) => (
                         <span
                           key={skillIdx}
-                          className="px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full border border-slate-600/50 hover:border-blue-500/50 hover:text-blue-400 transition-all duration-200"
+                          className="flex items-center justify-center px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full border border-slate-600/50 hover:border-blue-500/50 hover:text-blue-400 transition-all duration-200 cursor-pointer"
                         >
                           {skill}
                         </span>
@@ -213,7 +222,7 @@ const About_Me = () => {
                 </div>
               </motion.div>
             ))}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {stats.map((stat, idx) => (
                 <motion.div
                   key={idx}

@@ -8,6 +8,7 @@ import Smart from "../../assets/Smart.png";
 import Supabase from "../../assets/Supabase.png";
 import Chatbot from "../../assets/chatbot.png";
 import Meeting from "../../assets/Meeting.png";
+import MachineLearning from "../../assets/Machine_Learning.jpg";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Data = [
@@ -64,6 +65,23 @@ const Data = [
     liveDemo: "#",
     code: "#",
     image: Meeting,
+  },
+  {
+    header: "Full-Stack ML and DL Healthcare Disease Prediction Platform",
+    description:
+      "Full-stack ML and DL platform predicting Parkinson's, breast cancer, and diabetes risk in real time via FastAPI-served models and a React frontend.",
+    tech: [
+      "React",
+      "Python",
+      "Machine Learning",
+      "Deep Learning",
+      "sklearn",
+      "TensorFlow",
+      "Keras",
+    ],
+    liveDemo: "#",
+    code: "#",
+    image: MachineLearning,
   },
 ];
 function Projects() {

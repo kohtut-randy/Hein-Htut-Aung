@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import TextReveal from "../../common/TextReveal";
@@ -86,152 +86,51 @@ const Data = [
 ];
 
 const hasLink = (href) => href && href !== "#";
-const MAX_TAGS = 4;
-const STACK_DEPTH = 3; // visible cards: top + 2 behind
-const SWIPE_DISTANCE = 90;
-const SWIPE_VELOCITY = 500;
-
-// Top card flies off in the direction of travel; cards behind just fade out
-const cardVariants = {
-  exitTop: (dir) => ({
-    x: -dir * 480,
-    opacity: 0,
-    rotate: -dir * 6,
-    transition: { duration: 0.35, ease: "easeIn" },
-  }),
-  exitBack: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
-};
-
-function CardContent({ project }) {
-  return (
-    <div className="flex flex-col md:flex-row h-full">
-      <div className="h-[30%] md:h-auto md:w-1/2 shrink-0 bg-black/20">
-        <img
-          src={project.image}
-          alt={`${project.header} screenshot`}
-          draggable={false}
-          className="w-full h-full object-contain select-none"
-        />
-      </div>
-
-      <div className="flex-1 min-h-0 min-w-0 p-3 md:p-6 flex flex-col justify-center gap-2 md:gap-3 overflow-hidden">
-        <h2
-          style={{ color: "white" }}
-          className="text-lg md:text-2xl font-semibold leading-tight"
-        >
-          {project.header}
-        </h2>
-        <p
-          style={{ color: "#d1d5db" }}
-          className="text-sm md:text-sm leading-relaxed line-clamp-3 md:line-clamp-5"
-        >
-          {project.description}
-        </p>
-
-        <ul className="flex flex-wrap gap-1.5 md:gap-2">
-          {project.tech.slice(0, MAX_TAGS).map((t) => (
-            <li
-              key={t}
-              style={{ color: "white" }}
-              className="bg-[#23235b] text-xs px-3 py-1 rounded-full border border-[#6c63ff]"
-            >
-              {t}
-            </li>
-          ))}
-          {project.tech.length > MAX_TAGS && (
-            <li
-              style={{ color: "white" }}
-              className="bg-[#23235b] text-xs px-3 py-1 rounded-full"
-            >
-              +{project.tech.length - MAX_TAGS}
-            </li>
-          )}
-        </ul>
-
-        {(hasLink(project.liveDemo) || hasLink(project.code)) && (
-          <div className="flex flex-wrap gap-3 pt-1">
-            {hasLink(project.liveDemo) && (
-              <a
-                href={project.liveDemo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Live demo
-              </a>
-            )}
-            {hasLink(project.code) && (
-              <a
-                href={project.code}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/30 hover:bg-white/10 text-white text-sm transition-colors"
-              >
-                <Github className="h-4 w-4" />
-                View code
-              </a>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+const MOBILE_TAGS = 4;
+const pad = (num) => String(num).padStart(2, "0");
 
 function Projects() {
   const reduceMotion = useReducedMotion();
   const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
   const [active, setActive] = useState(0);
-  const [dir, setDir] = useState(1);
+  const tabsRef = useRef(null);
+  const tabRefs = useRef([]);
   const n = Data.length;
+  const project = Data[active];
 
-  const go = (delta) => {
-    setDir(delta);
-    setActive((i) => (i + delta + n) % n);
-  };
+  const go = (delta) => setActive((i) => (i + delta + n) % n);
 
-  const goTo = (index) => {
-    if (index === active) return;
-    setDir(index > active ? 1 : -1);
-    setActive(index);
-  };
+  // Keep the selected pill centered inside the scrolling tab row
+  useEffect(() => {
+    const row = tabsRef.current;
+    const tab = tabRefs.current[active];
+    if (!row || !tab) return;
+    row.scrollTo({
+      left: tab.offsetLeft - (row.clientWidth - tab.clientWidth) / 2,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [active, reduceMotion]);
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
       go(1);
+      tabRefs.current[(active + 1) % n]?.focus({ preventScroll: true });
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
       go(-1);
+      tabRefs.current[(active - 1 + n) % n]?.focus({ preventScroll: true });
     }
   };
-
-  const onDragEnd = (_, info) => {
-    if (info.offset.x < -SWIPE_DISTANCE || info.velocity.x < -SWIPE_VELOCITY) {
-      go(1);
-    } else if (
-      info.offset.x > SWIPE_DISTANCE ||
-      info.velocity.x > SWIPE_VELOCITY
-    ) {
-      go(-1);
-    }
-  };
-
-  // Offsets rendered back-to-front so the top card paints last
-  const offsets = Array.from(
-    { length: STACK_DEPTH },
-    (_, k) => STACK_DEPTH - 1 - k,
-  );
 
   return (
     <section
       ref={ref}
       id="projects"
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full h-screen overflow-hidden text-foreground"
       style={{ height: "100dvh" }}
     >
-      <div className="h-full w-full max-w-6xl mx-auto px-4 pt-20 pb-4 flex flex-col gap-3 md:gap-4">
+      <div className="h-full w-full max-w-6xl mx-auto px-4 pt-20 pb-4 flex flex-col gap-3 md:gap-10">
         {/* Heading row */}
         <div className="flex items-end justify-between gap-4 shrink-0">
           <motion.h1
@@ -242,113 +141,161 @@ function Projects() {
           >
             Projects
           </motion.h1>
-          <TextReveal className="hidden sm:block text-gray-400 text-sm md:text-base text-right">
+          <TextReveal className="hidden sm:block text-muted text-sm md:text-base text-right">
             Showcasing my recent work and creative solutions
           </TextReveal>
         </div>
 
-        {/* Card stack */}
+        {/* Project tabs: one scrolling row of pills */}
         <div
-          tabIndex={0}
+          ref={tabsRef}
+          role="tablist"
+          aria-label="Projects"
           onKeyDown={handleKeyDown}
-          aria-roledescription="carousel"
-          aria-label="Projects. Use the left and right arrow keys to change project."
-          className="relative flex-1 min-h-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-2xl"
+          className="relative shrink-0 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {/* Leave room at the bottom so the cards behind peek out */}
-          <div className="absolute inset-x-0 top-1/2 mx-auto h-[min(70%,30rem)] max-w-5xl -translate-y-1/2">
-            <AnimatePresence initial={false} custom={dir}>
-              {offsets.map((offset) => {
-                const idx = (active + offset) % n;
-                const isTop = offset === 0;
-                return (
-                  <motion.div
-                    key={idx}
-                    custom={dir}
-                    variants={cardVariants}
-                    exit={isTop ? "exitTop" : "exitBack"}
-                    initial={
-                      isTop && dir < 0
-                        ? { x: -480, opacity: 0 }
-                        : { opacity: 0, scale: 0.85, y: 40 }
-                    }
-                    animate={{
-                      x: 0,
-                      rotate: 0,
-                      opacity: 1 - offset * 0.2,
-                      scale: 1 - offset * 0.05,
-                      y:
-                        offset *
-                        (typeof window !== "undefined" &&
-                        window.innerWidth >= 768
-                          ? 16
-                          : 11),
-                    }}
-                    transition={
-                      reduceMotion
-                        ? { duration: 0 }
-                        : { type: "spring", stiffness: 280, damping: 28 }
-                    }
-                    drag={isTop ? "x" : false}
-                    dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.7}
-                    onDragEnd={isTop ? onDragEnd : undefined}
-                    whileDrag={{ cursor: "grabbing" }}
-                    aria-hidden={!isTop}
-                    style={{
-                      touchAction: "pan-y",
-                      zIndex: STACK_DEPTH - offset,
-                      pointerEvents: isTop ? "auto" : "none",
-                    }}
-                    className={`absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-[#23235b] to-[#3a1857] shadow-xl ${
-                      isTop ? "cursor-grab" : ""
-                    }`}
-                  >
-                    {isTop && <CardContent project={Data[idx]} />}
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Controls */}
-        <div className="flex items-center justify-center gap-3 shrink-0">
-          <button
-            onClick={() => go(-1)}
-            aria-label="Previous project"
-            className="p-2 rounded-full bg-purple-600/80 hover:bg-purple-600 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-
-          <div className="flex items-center">
-            {Data.map((p, i) => (
+          {Data.map((p, i) => {
+            const isActive = i === active;
+            return (
               <button
                 key={p.header}
-                onClick={() => goTo(i)}
-                aria-label={`Go to ${p.header}`}
-                aria-current={i === active}
-                className="h-8 w-5 sm:w-6 flex items-center justify-center focus:outline-none group"
+                ref={(el) => (tabRefs.current[i] = el)}
+                role="tab"
+                aria-selected={isActive}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setActive(i)}
+                className={`shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                  isActive
+                    ? "bg-accent border-accent text-white"
+                    : "border-border text-muted hover:text-foreground hover:border-accent"
+                }`}
               >
-                <span
-                  className={`block h-2 rounded-full transition-all duration-300 group-focus-visible:ring-2 group-focus-visible:ring-purple-300 ${
-                    i === active
-                      ? "w-6 bg-gradient-to-r from-purple-500 to-pink-500"
-                      : "w-2 bg-gray-500 group-hover:bg-gray-300"
-                  }`}
-                />
+                {p.header}
               </button>
-            ))}
+            );
+          })}
+        </div>
+
+        {/* Body: browser mockup + details */}
+        <div className="flex-1 min-h-0 flex flex-col md:flex-row gap-4 md:gap-10">
+          {/* Browser window */}
+          <div className="flex-none h-[40%] min-h-[100px] md:h-[380px] md:w-[58%] min-h-0 flex flex-col rounded-xl overflow-hidden border border-border bg-surface shadow-xl">
+            <div className="shrink-0 h-9 md:h-10 flex items-center gap-3 px-3 border-b border-border bg-background/60">
+              <div className="flex gap-1.5" aria-hidden="true">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+              </div>
+              <div className="flex-1 min-w-0 text-center text-xs text-muted truncate px-3 py-1 rounded-md bg-background border border-border">
+                {project.header}
+              </div>
+            </div>
+
+            <div className="relative flex-1 min-h-0 bg-background">
+              <AnimatePresence initial={false}>
+                <motion.img
+                  key={active}
+                  src={project.image}
+                  alt={`${project.header} screenshot`}
+                  className="absolute inset-0 w-full h-full object-contain"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.4 }}
+                />
+              </AnimatePresence>
+            </div>
           </div>
 
-          <button
-            onClick={() => go(1)}
-            aria-label="Next project"
-            className="p-2 rounded-full bg-purple-600/80 hover:bg-purple-600 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+          {/* Details */}
+          <div className="shrink-0 md:shrink md:flex-1 min-w-0 max-h-[46%] md:max-h-none overflow-y-auto md:flex md:flex-col md:justify-center md:-translate-y-12">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={active}
+                role="tabpanel"
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="flex flex-col gap-2 md:gap-4"
+              >
+                {/* Counter + prev/next */}
+                <div className="flex items-center justify-between">
+                  <p className="text-xs md:text-sm text-muted tabular-nums">
+                    {pad(active + 1)} / {pad(n)}
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => go(-1)}
+                      aria-label="Previous project"
+                      className="p-1.5 rounded-full border border-border text-muted hover:text-white hover:bg-accent hover:border-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => go(1)}
+                      aria-label="Next project"
+                      className="p-1.5 rounded-full border border-border text-muted hover:text-white hover:bg-accent hover:border-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <h2 className="text-xl md:text-3xl font-semibold leading-tight text-accent">
+                  {project.header}
+                </h2>
+                <p className="text-sm md:text-base leading-relaxed text-muted line-clamp-3 md:line-clamp-none">
+                  {project.description}
+                </p>
+
+                <ul className="flex flex-wrap gap-1.5 md:gap-2">
+                  {project.tech.map((t, i) => (
+                    <li
+                      key={t}
+                      className={`${
+                        i >= MOBILE_TAGS ? "hidden md:block" : ""
+                      } text-xs px-3 py-1 rounded-full bg-surface border border-border text-foreground`}
+                    >
+                      {t}
+                    </li>
+                  ))}
+                  {project.tech.length > MOBILE_TAGS && (
+                    <li className="md:hidden text-xs px-3 py-1 rounded-full bg-surface border border-border text-muted">
+                      +{project.tech.length - MOBILE_TAGS}
+                    </li>
+                  )}
+                </ul>
+
+                {(hasLink(project.liveDemo) || hasLink(project.code)) && (
+                  <div className="flex flex-wrap gap-3 pt-1">
+                    {hasLink(project.liveDemo) && (
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent hover:bg-indigo-700 text-white text-sm transition-colors"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        Live demo
+                      </a>
+                    )}
+                    {hasLink(project.code) && (
+                      <a
+                        href={project.code}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent text-foreground text-sm transition-colors"
+                      >
+                        <Github className="h-4 w-4" />
+                        View code
+                      </a>
+                    )}
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>

@@ -203,7 +203,7 @@ function CertSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            Certifications & Credentials
+            Certifications
           </motion.h1>
           <motion.p
             className="hidden md:block text-muted text-sm md:text-base text-right max-w-xs"

@@ -54,7 +54,7 @@ function Hero() {
           {["Hein Htut Aung"].map((text, i) => (
             <span key={text} className="block overflow-hidden pb-[0.08em]">
               <motion.span
-                className="block"
+                className="block text-accent"
                 custom={i}
                 variants={line}
                 initial="hidden"

@@ -62,15 +62,15 @@ function SectionIndicator() {
           <motion.div
             className={`w-3 h-3 rounded-full border-2 transition-all ${
               activeSection === section.id
-                ? "border-purple-500 bg-purple-500 scale-125"
-                : "border-gray-500 bg-transparent"
+                ? "border-accent bg-accent scale-125"
+                : "border-muted bg-transparent"
             }`}
             animate={{
               scale: activeSection === section.id ? 1.25 : 1,
             }}
           />
           <motion.span
-            className="absolute right-6 px-3 py-1 bg-gray-800/90 text-white text-sm rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none"
+            className="absolute right-6 px-3 py-1 bg-surface text-foreground border border-border text-sm rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none"
             initial={{ x: 10 }}
             whileHover={{ x: 0 }}
           >

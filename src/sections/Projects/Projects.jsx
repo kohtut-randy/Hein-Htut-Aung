@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import TextReveal from "../../common/TextReveal";
 import NBA from "../../assets/NBA.png";
@@ -9,7 +9,7 @@ import Supabase from "../../assets/Supabase.png";
 import Chatbot from "../../assets/chatbot.png";
 import Meeting from "../../assets/Meeting.png";
 import MachineLearning from "../../assets/Machine_Learning.jpg";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Data = [
   {
@@ -42,7 +42,7 @@ const Data = [
   {
     header: "Supabase Project",
     description:
-      "Supabase CRUD Todo Application is a modern, full-stack task manager featuring complete Create, Read, Update, and Delete capabilities. It pairs an intuitive user interface with a Supabase PostgreSQL backend to provide real-time data persistence and seamless task synchronization across sessions.",
+      "A full-stack task manager with complete Create, Read, Update, and Delete capabilities. It pairs an intuitive interface with a Supabase PostgreSQL backend for real-time data persistence and task synchronization across sessions.",
     tech: ["Supabase", "React", "Vite"],
     liveDemo: "#",
     code: "#",
@@ -51,7 +51,7 @@ const Data = [
   {
     header: "React Chatbot with Gemini API",
     description:
-      "This project is a lightweight, beginner-friendly React template that integrates Google’s Gemini API to create a real-time conversational chatbot. It features a responsive UI for dynamic message handling and state management, allowing developers to easily customize the AI's persona for specific use cases like customer support or virtual assistants.",
+      "A lightweight, beginner-friendly React template that integrates Google's Gemini API for a real-time conversational chatbot. Its responsive UI handles dynamic messages and state, and the AI persona is easy to customize for use cases like customer support or virtual assistants.",
     tech: ["Google Gemini API", "React", "Tailwind"],
     liveDemo: "#",
     code: "#",
@@ -60,16 +60,16 @@ const Data = [
   {
     header: "Full-Stack Meeting Booking App",
     description:
-      "This is a modern, web-based platform designed to streamline the management and reservation of meeting spaces for co-working environments and corporate offices.The application allows users to view real-time room availability, browse amenities, and book specific time slots through a secure, user-friendly interface.Built with high-performance tools like React and TypeScript, it features an integrated admin dashboard for managing room listings, scheduling, and user bookings efficiently.",
+      "A web platform for managing and reserving meeting spaces in co-working environments and corporate offices. Users see real-time room availability, browse amenities, and book time slots, while an admin dashboard handles room listings, scheduling, and bookings.",
     tech: ["React", "Node.js", "PostgreSQL"],
     liveDemo: "#",
     code: "#",
     image: Meeting,
   },
   {
-    header: "Full-Stack ML and DL Healthcare Disease Prediction Platform",
+    header: "Healthcare Disease Prediction Platform",
     description:
-      "Full-stack ML and DL platform predicting Parkinson's, breast cancer, and diabetes risk in real time via FastAPI-served models and a React frontend.",
+      "A full-stack ML and DL platform that predicts Parkinson's, breast cancer, and diabetes risk in real time, using FastAPI-served models and a React frontend.",
     tech: [
       "React",
       "Python",
@@ -84,218 +84,272 @@ const Data = [
     image: MachineLearning,
   },
 ];
+
+const hasLink = (href) => href && href !== "#";
+const MAX_TAGS = 4;
+const STACK_DEPTH = 3; // visible cards: top + 2 behind
+const SWIPE_DISTANCE = 90;
+const SWIPE_VELOCITY = 500;
+
+// Top card flies off in the direction of travel; cards behind just fade out
+const cardVariants = {
+  exitTop: (dir) => ({
+    x: -dir * 480,
+    opacity: 0,
+    rotate: -dir * 6,
+    transition: { duration: 0.35, ease: "easeIn" },
+  }),
+  exitBack: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
+};
+
+function CardContent({ project }) {
+  return (
+    <div className="flex flex-col md:flex-row h-full">
+      <div className="h-[30%] md:h-auto md:w-1/2 shrink-0 bg-black/20">
+        <img
+          src={project.image}
+          alt={`${project.header} screenshot`}
+          draggable={false}
+          className="w-full h-full object-contain select-none"
+        />
+      </div>
+
+      <div className="flex-1 min-h-0 min-w-0 p-3 md:p-6 flex flex-col justify-center gap-2 md:gap-3 overflow-hidden">
+        <h2
+          style={{ color: "white" }}
+          className="text-lg md:text-2xl font-semibold leading-tight"
+        >
+          {project.header}
+        </h2>
+        <p
+          style={{ color: "#d1d5db" }}
+          className="text-sm md:text-sm leading-relaxed line-clamp-3 md:line-clamp-5"
+        >
+          {project.description}
+        </p>
+
+        <ul className="flex flex-wrap gap-1.5 md:gap-2">
+          {project.tech.slice(0, MAX_TAGS).map((t) => (
+            <li
+              key={t}
+              style={{ color: "white" }}
+              className="bg-[#23235b] text-xs px-3 py-1 rounded-full border border-[#6c63ff]"
+            >
+              {t}
+            </li>
+          ))}
+          {project.tech.length > MAX_TAGS && (
+            <li
+              style={{ color: "white" }}
+              className="bg-[#23235b] text-xs px-3 py-1 rounded-full"
+            >
+              +{project.tech.length - MAX_TAGS}
+            </li>
+          )}
+        </ul>
+
+        {(hasLink(project.liveDemo) || hasLink(project.code)) && (
+          <div className="flex flex-wrap gap-3 pt-1">
+            {hasLink(project.liveDemo) && (
+              <a
+                href={project.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm transition-colors"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Live demo
+              </a>
+            )}
+            {hasLink(project.code) && (
+              <a
+                href={project.code}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/30 hover:bg-white/10 text-white text-sm transition-colors"
+              >
+                <Github className="h-4 w-4" />
+                View code
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Projects() {
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
+  const reduceMotion = useReducedMotion();
+  const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+  const n = Data.length;
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
-
-  const nextSlide = () => {
-    setDirection(1);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % Data.length);
+  const go = (delta) => {
+    setDir(delta);
+    setActive((i) => (i + delta + n) % n);
   };
 
-  const prevSlide = () => {
-    setDirection(-1);
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + Data.length) % Data.length);
+  const goTo = (index) => {
+    if (index === active) return;
+    setDir(index > active ? 1 : -1);
+    setActive(index);
   };
 
-  const goToSlide = (index) => {
-    setDirection(index > currentIndex ? 1 : -1);
-    setCurrentIndex(index);
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      go(1);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      go(-1);
+    }
   };
 
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-      scale: 0.8,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction) => ({
-      x: direction > 0 ? -1000 : 1000,
-      opacity: 0,
-      scale: 0.8,
-    }),
+  const onDragEnd = (_, info) => {
+    if (info.offset.x < -SWIPE_DISTANCE || info.velocity.x < -SWIPE_VELOCITY) {
+      go(1);
+    } else if (
+      info.offset.x > SWIPE_DISTANCE ||
+      info.velocity.x > SWIPE_VELOCITY
+    ) {
+      go(-1);
+    }
   };
+
+  // Offsets rendered back-to-front so the top card paints last
+  const offsets = Array.from(
+    { length: STACK_DEPTH },
+    (_, k) => STACK_DEPTH - 1 - k,
+  );
 
   return (
     <section
       ref={ref}
       id="projects"
-      className="min-h-screen flex flex-col items-center justify-center gap-10 relative overflow-hidden pt-20"
+      className="relative w-full h-screen overflow-hidden"
+      style={{ height: "100dvh" }}
     >
-      {/* Animated gradient orbs */}
-      <motion.div
-        className="absolute -top-20 -left-20 w-96 h-96 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute -bottom-20 -right-20 w-96 h-96 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.h1
-        style={{ color: "white" }}
-        className="text-3xl md:text-4xl lg:text-5xl font-bold px-4"
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-      >
-        Projects
-      </motion.h1>
-      <TextReveal className="text-gray-400 text-base md:text-lg lg:text-xl max-w-2xl text-center px-4">
-        Showcasing my recent work and creative solutions
-      </TextReveal>
+      <div className="h-full w-full max-w-6xl mx-auto px-4 pt-20 pb-4 flex flex-col gap-3 md:gap-4">
+        {/* Heading row */}
+        <div className="flex items-end justify-between gap-4 shrink-0">
+          <motion.h1
+            className="text-2xl md:text-4xl font-bold text-accent"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            Projects
+          </motion.h1>
+          <TextReveal className="hidden sm:block text-gray-400 text-sm md:text-base text-right">
+            Showcasing my recent work and creative solutions
+          </TextReveal>
+        </div>
 
-      {/* Carousel Container */}
-      <div className="relative w-full max-w-6xl px-2 md:px-4 flex items-center justify-center">
-        {/* Navigation buttons - Desktop only */}
-        <button
-          onClick={prevSlide}
-          className="hidden md:flex absolute left-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2 z-10"
-          aria-label="Previous project"
+        {/* Card stack */}
+        <div
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          aria-roledescription="carousel"
+          aria-label="Projects. Use the left and right arrow keys to change project."
+          className="relative flex-1 min-h-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-2xl"
         >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="hidden md:flex absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2 z-10"
-          aria-label="Next project"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
+          {/* Leave room at the bottom so the cards behind peek out */}
+          <div className="absolute inset-x-0 top-1/2 mx-auto h-[min(70%,30rem)] max-w-5xl -translate-y-1/2">
+            <AnimatePresence initial={false} custom={dir}>
+              {offsets.map((offset) => {
+                const idx = (active + offset) % n;
+                const isTop = offset === 0;
+                return (
+                  <motion.div
+                    key={idx}
+                    custom={dir}
+                    variants={cardVariants}
+                    exit={isTop ? "exitTop" : "exitBack"}
+                    initial={
+                      isTop && dir < 0
+                        ? { x: -480, opacity: 0 }
+                        : { opacity: 0, scale: 0.85, y: 40 }
+                    }
+                    animate={{
+                      x: 0,
+                      rotate: 0,
+                      opacity: 1 - offset * 0.2,
+                      scale: 1 - offset * 0.05,
+                      y:
+                        offset *
+                        (typeof window !== "undefined" &&
+                        window.innerWidth >= 768
+                          ? 16
+                          : 11),
+                    }}
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : { type: "spring", stiffness: 280, damping: 28 }
+                    }
+                    drag={isTop ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.7}
+                    onDragEnd={isTop ? onDragEnd : undefined}
+                    whileDrag={{ cursor: "grabbing" }}
+                    aria-hidden={!isTop}
+                    style={{
+                      touchAction: "pan-y",
+                      zIndex: STACK_DEPTH - offset,
+                      pointerEvents: isTop ? "auto" : "none",
+                    }}
+                    className={`absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-[#23235b] to-[#3a1857] shadow-xl ${
+                      isTop ? "cursor-grab" : ""
+                    }`}
+                  >
+                    {isTop && <CardContent project={Data[idx]} />}
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+        </div>
 
-        {/* Carousel Slide */}
-        <div className="w-full overflow-hidden px-4 md:px-6 lg:px-8">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.5 },
-                scale: { duration: 0.5 },
-              }}
-              className="w-full"
-            >
-              <div className="bg-gradient-to-br from-[#23235b] to-[#3a1857] rounded-xl shadow-lg px-3 md:px-4 lg:px-6 flex flex-col justify-between min-h-[350px] md:min-h-[400px] relative overflow-hidden mx-auto max-w-4xl">
-                {/* Floating corner accent */}
-                <motion.div
-                  className="absolute top-0 right-0 w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-bl-full"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.3, 0.6, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+        {/* Controls */}
+        <div className="flex items-center justify-center gap-3 shrink-0">
+          <button
+            onClick={() => go(-1)}
+            aria-label="Previous project"
+            className="p-2 rounded-full bg-purple-600/80 hover:bg-purple-600 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          <div className="flex items-center">
+            {Data.map((p, i) => (
+              <button
+                key={p.header}
+                onClick={() => goTo(i)}
+                aria-label={`Go to ${p.header}`}
+                aria-current={i === active}
+                className="h-8 w-5 sm:w-6 flex items-center justify-center focus:outline-none group"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-all duration-300 group-focus-visible:ring-2 group-focus-visible:ring-purple-300 ${
+                    i === active
+                      ? "w-6 bg-gradient-to-r from-purple-500 to-pink-500"
+                      : "w-2 bg-gray-500 group-hover:bg-gray-300"
+                  }`}
                 />
-                <div className="flex flex-col lg:flex-row items-center justify-center gap-4 md:gap-6 py-4 md:py-6 lg:py-8">
-                  {/* Project Image */}
-                  <div className="w-full lg:w-1/2 h-48 md:h-56 lg:h-64 overflow-hidden rounded-lg">
-                    <img
-                      src={Data[currentIndex].image}
-                      alt={Data[currentIndex].header}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start w-full lg:w-1/2">
-                    <h2
-                      style={{ color: "white" }}
-                      className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-2 md:mb-3"
-                    >
-                      {Data[currentIndex].header}
-                    </h2>
-                    <p
-                      style={{ color: "white" }}
-                      className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base"
-                    >
-                      {Data[currentIndex].description}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
-                      {Data[currentIndex].tech.map((tech, i) => (
-                        <span
-                          style={{ color: "white" }}
-                          key={i}
-                          className="bg-[#23235b] text-xs text-white px-3 py-1 rounded-full border border-[#6c63ff] transition-opacity hover:opacity-70"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => go(1)}
+            aria-label="Next project"
+            className="p-2 rounded-full bg-purple-600/80 hover:bg-purple-600 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
-      </div>
-
-      {/* Carousel Dots Indicator */}
-      <div className="flex gap-3 mt-6 items-center justify-center flex-wrap">
-        {/* Mobile Navigation Buttons */}
-        <button
-          onClick={prevSlide}
-          className="md:hidden bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2 z-10"
-          aria-label="Previous project"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-
-        {/* Dots */}
-        <div className="flex gap-3">
-          {Data.map((_, index) => (
-            <motion.button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 w-8"
-                  : "bg-gray-500"
-              }`}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-            />
-          ))}
-        </div>
-
-        {/* Mobile Navigation Buttons */}
-        <button
-          onClick={nextSlide}
-          className="md:hidden bg-purple-600/80 hover:bg-purple-600 text-white rounded-full p-2 z-10"
-          aria-label="Next project"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
       </div>
     </section>
   );

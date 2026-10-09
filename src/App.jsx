@@ -37,7 +37,7 @@ function App() {
       <AnimatePresence>
         {loading && (
           <motion.div
-            className="fixed inset-0 z-[200] bg-[#111827] flex items-center justify-center"
+            className="fixed inset-0 z-[200] bg-background flex items-center justify-center"
             exit={{ opacity: 0, scale: 1.2 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
           >
@@ -68,7 +68,7 @@ function App() {
 
       {/* <CustomCursor /> */}
       {/* <SectionIndicator /> */}
-      <div className="w-[100%] bg-[#111827] flex flex-col gap 10">
+      <div className="w-[100%] bg-background flex flex-col gap 10">
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-blue-400 to-pink-500 origin-left z-[100]"
           style={{ scaleX }}

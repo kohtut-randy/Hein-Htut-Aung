@@ -1,11 +1,53 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-background: var(--background-color);
+  --color-surface: var(--surface-color);
+  --color-accent: var(--accent-color);
+  --color-foreground: var(--text-color);
+  --color-muted: var(--muted-color);
+  --color-border: var(--border-color);
+}
+
+:root {
+  color-scheme: light;
+  --background-color: #ffffff;
+  --surface-color: #f1f5f9;
+  --accent-color: #4f46e5;
+  --text-color: #111827;
+  --muted-color: #475569;
+  --border-color: #cbd5e1;
+  --form-text-color: #111827;
+  --btn-color: #4f46e5;
+  --btn-text-color: #ffffff;
+  --footer-text-color: #111827;
+  --project-card-bg: #f1f5f9;
+  --modal-color: #ffffff;
+}
+
+body[data-theme="dark"] {
+  color-scheme: dark;
+  --background-color: #111827;
+  --surface-color: #1f2937;
+  --accent-color: #818cf8;
+  --text-color: #f9fafb;
+  --muted-color: #cbd5e1;
+  --border-color: #475569;
+  --form-text-color: #f9fafb;
+  --btn-color: #4f46e5;
+  --btn-text-color: #ffffff;
+  --footer-text-color: #f9fafb;
+  --project-card-bg: #1f2937;
+  --modal-color: #1f2937;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #111827;
+  background-color: var(--background-color);
+  color: var(--text-color);
   overflow-x: hidden;
 }
 
@@ -15,14 +57,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a2e;
+  background: var(--surface-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6c63ff, #4a90e2);
+  background: var(--accent-color);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #8a7fff, #6aa8ff);
+  background: var(--text-color);
 }

@@ -47,7 +47,7 @@ const Navbar = () => {
   const getLinkClass = (sectionId) => {
     const isActive = activeSection === sectionId;
     return isActive
-      ? "text-blue-400 font-semibold"
+      ? "text-accent font-semibold"
       : "text-muted-foreground hover:text-foreground";
   };
 
@@ -55,20 +55,20 @@ const Navbar = () => {
     <>
       {/* Desktop Navbar */}
       <motion.nav
-        className="sticky top-0 z-50 w-full hidden md:flex items-center justify-between px-8 py-4 bg-[#111827]/80 backdrop-blur-lg border-b border-purple-500/10"
+        className="sticky top-0 z-50 w-full hidden md:flex items-center justify-between px-8 py-4 bg-background/80 backdrop-blur-lg border-b border-border"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <motion.button
           onClick={() => scrollToSection("hero")}
-          className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-400"
+          className="text-2xl font-bold text-accent"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           Hein Htut Aung
         </motion.button>
-        <ul className="flex space-x-10 text-gray-300 text-lg font-medium">
+        <ul className="flex space-x-10 text-muted text-lg font-medium">
           <li>
             <MagneticButton
               onClick={() => scrollToSection("about")}
@@ -104,7 +104,7 @@ const Navbar = () => {
         </ul>
         <MagneticButton
           onClick={() => scrollToSection("contact")}
-          className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-md hover:shadow-purple-500/50"
+          className="px-6 py-2 rounded-lg bg-accent text-white font-semibold shadow-md hover:bg-indigo-700"
         >
           Contact Me
         </MagneticButton>
@@ -119,7 +119,7 @@ const Navbar = () => {
       >
         <motion.button
           onClick={() => scrollToSection("hero")}
-          className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-400"
+          className="text-xl font-bold text-accent"
           whileTap={{ scale: 0.95 }}
         >
           Hein Htut Aung
@@ -169,7 +169,7 @@ const Navbar = () => {
 
             {/* Side Panel */}
             <motion.div
-              className="fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 backdrop-blur-lg z-50 md:hidden shadow-2xl border-l border-purple-500/30"
+              className="fixed top-0 right-0 h-full w-64 bg-surface backdrop-blur-lg z-50 md:hidden shadow-2xl border-l border-border"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -180,7 +180,7 @@ const Navbar = () => {
                 <div className="flex justify-end mb-8">
                   <motion.button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-gray-400 hover:text-white"
+                    className="text-muted hover:text-foreground"
                     whileTap={{ scale: 0.95 }}
                   >
                     <svg
@@ -203,7 +203,7 @@ const Navbar = () => {
                 <nav className="flex flex-col space-y-4 flex-1">
                   <motion.button
                     onClick={() => scrollToSection("about")}
-                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "about" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "about" ? "bg-accent/10 text-accent font-semibold border border-accent/50" : "text-muted hover:bg-background hover:text-foreground"}`}
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -211,7 +211,7 @@ const Navbar = () => {
                   </motion.button>
                   <motion.button
                     onClick={() => scrollToSection("projects")}
-                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "projects" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "projects" ? "bg-accent/10 text-accent font-semibold border border-accent/50" : "text-muted hover:bg-background hover:text-foreground"}`}
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -219,7 +219,7 @@ const Navbar = () => {
                   </motion.button>
                   <motion.button
                     onClick={() => scrollToSection("skills")}
-                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "skills" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "skills" ? "bg-accent/10 text-accent font-semibold border border-accent/50" : "text-muted hover:bg-background hover:text-foreground"}`}
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -227,7 +227,7 @@ const Navbar = () => {
                   </motion.button>
                   <motion.button
                     onClick={() => scrollToSection("certifications")}
-                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "certifications" ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/50" : "text-gray-300 hover:bg-slate-700/50 hover:text-white"}`}
+                    className={`text-left text-lg px-4 py-2 rounded-lg transition-all ${activeSection === "certifications" ? "bg-accent/10 text-accent font-semibold border border-accent/50" : "text-muted hover:bg-background hover:text-foreground"}`}
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -238,7 +238,7 @@ const Navbar = () => {
                 {/* Hire Me Button */}
                 <motion.button
                   onClick={() => scrollToSection("contact")}
-                  className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-blue-400 text-white font-semibold shadow-lg hover:shadow-purple-500/50 mt-auto transition-all"
+                  className="w-full px-6 py-3 rounded-lg bg-accent text-white font-semibold shadow-lg hover:bg-indigo-700 mt-auto transition-all"
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
                 >

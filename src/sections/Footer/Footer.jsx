@@ -18,7 +18,7 @@ function Footer() {
       transition={{ duration: 0.6 }}
     >
       <motion.p
-        style={{ color: "white" }}
+        style={{ color: "var(--text-color)" }}
         initial={{ y: 20, opacity: 0 }}
         animate={inView ? { y: 0, opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 0.2 }}

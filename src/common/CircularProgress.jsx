@@ -29,7 +29,7 @@ function CircularProgress({ percentage, label, delay = 0 }) {
             cx="70"
             cy="70"
             r={radius}
-            stroke="rgba(255, 255, 255, 0.1)"
+            stroke="var(--border-color)"
             strokeWidth="8"
             fill="none"
           />
@@ -49,9 +49,9 @@ function CircularProgress({ percentage, label, delay = 0 }) {
           />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8b5cf6" />
-              <stop offset="50%" stopColor="#60a5fa" />
-              <stop offset="100%" stopColor="#ec4899" />
+              <stop offset="0%" stopColor="var(--accent-color)" />
+              <stop offset="50%" stopColor="var(--accent-color)" />
+              <stop offset="100%" stopColor="var(--muted-color)" />
             </linearGradient>
           </defs>
         </svg>
@@ -61,11 +61,13 @@ function CircularProgress({ percentage, label, delay = 0 }) {
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: delay + 0.5 }}
         >
-          <span className="text-2xl font-bold text-white">{percentage}%</span>
+          <span className="text-2xl font-bold text-foreground">
+            {percentage}%
+          </span>
         </motion.div>
       </div>
       <motion.span
-        className="text-sm text-gray-300 font-medium"
+        className="text-sm text-muted font-medium"
         initial={{ opacity: 0, y: 10 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5, delay: delay + 0.7 }}

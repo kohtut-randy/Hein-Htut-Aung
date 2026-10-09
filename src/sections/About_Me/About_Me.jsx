@@ -1,6 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { Code2, Zap } from "lucide-react";
 
 const stats = [
   { number: "3", label: "Years Experience" },
@@ -10,21 +11,7 @@ const stats = [
 
 const expertise = [
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-        />
-      </svg>
-    ),
+    icon: Code2,
     title: "Frontend Development",
     skills: [
       "React.js",
@@ -37,255 +24,191 @@ const expertise = [
       "Vite",
     ],
   },
-  // {
-  //   icon: (
-  //     <svg
-  //       className="w-6 h-6"
-  //       fill="none"
-  //       stroke="currentColor"
-  //       strokeWidth="2"
-  //       viewBox="0 0 24 24"
-  //     >
-  //       <path
-  //         strokeLinecap="round"
-  //         strokeLinejoin="round"
-  //         d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-  //       />
-  //     </svg>
-  //   ),
-  //   title: "UI/UX Design",
-  //   skills: [
-  //     "Responsive Design",
-  //     "Design Systems",
-  //     "User Experience",
-  //     "Prototyping",
-  //   ],
-  // },
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
-    ),
+    icon: Zap,
     title: "Performance Optimization",
     skills: ["Code Splitting", "SEO", "Web Vitals", "Accessibility"],
   },
 ];
 
+const PANELS = 2;
+
+const containerVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 const About_Me = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
+  const reduceMotion = useReducedMotion();
+  const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
+  const scrollerRef = useRef(null);
+  const [page, setPage] = useState(0);
+
+  // Mobile only: which swipe panel is showing
+  const handleScroll = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    if (max <= 0) return;
+    setPage(Math.round((el.scrollLeft / max) * (PANELS - 1)));
+  };
+
+  const goToPage = (i) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    el.scrollTo({
+      left: (max / (PANELS - 1)) * i,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
 
   return (
     <section
       ref={ref}
       id="about"
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#0f172a] to-[#1e293b] py-20 px-4 relative overflow-hidden"
+      className="relative w-full h-screen overflow-hidden bg-surface text-foreground"
+      style={{ height: "100dvh" }}
     >
-      {/* Subtle Background Grid */}
-      {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div> */}
-
-      {/* Gradient Orbs */}
-      <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.2, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.3, 0.2] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <div className="max-w-7xl w-full mx-auto relative z-10">
-        {/* Section Header */}
-        <motion.div
-          className="text-center mb-16"
+      <div className="h-full w-full max-w-6xl mx-auto px-4 md:px-6 pt-20 pb-5 flex flex-col gap-4 md:gap-6">
+        <motion.h1
+          className="text-2xl md:text-4xl font-bold shrink-0 text-accent"
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* <motion.span
-            className="text-blue-400 font-semibold text-sm tracking-wider uppercase mb-2 block"
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Get to Know Me
-          </motion.span> */}
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            About Me
-          </h2>
-          <motion.div
-            className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"
-            initial={{ width: 0 }}
-            animate={inView ? { width: 80 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          />
-        </motion.div>
+          About Me
+        </motion.h1>
 
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          {/* Left: Professional Summary */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-6"
+        <motion.div
+          className="flex-1 min-h-0 flex flex-col gap-4 md:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+        >
+          {/* Big numbers */}
+          <motion.dl
+            variants={itemVariants}
+            className="shrink-0 grid grid-cols-2 border-y border-border divide-x divide-border"
           >
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-bold text-white mb-4">
-                Frontend Developer
-              </h3>
-              <p className="text-slate-300 leading-relaxed mb-6">
-                With{" "}
-                <span className="text-blue-400 font-semibold">
-                  3 years of professional experience
-                </span>
-                , I specialize in crafting scalable, performant web applications
-                that prioritize user experience and code quality.
-              </p>
-              <p className="text-slate-300 leading-relaxed mb-6">
-                My expertise spans across{" "}
-                <span className="text-blue-400 font-semibold">
-                  React.js, Next.js, TypeScript
-                </span>
-                , and modern frontend technologies. I've successfully delivered
-                enterprise-level HRIS systems, task management platforms, and
-                full-stack solutions that streamline business operations.
-              </p>
-              <p className="text-slate-300 leading-relaxed">
-                I'm passionate about writing clean, maintainable code and
-                creating intuitive interfaces that solve real-world problems. My
-                approach combines technical excellence with strong collaboration
-                skills to deliver exceptional results.
-              </p>
-            </div>
-
-            {/* Stats */}
-          </motion.div>
-
-          {/* Right: Expertise Areas */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-4"
-          >
-            {expertise.map((item, idx) => (
-              <motion.div
-                key={idx}
-                className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-300 group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.6 + idx * 0.15 }}
-                whileHover={{
-                  y: -5,
-                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.15)",
-                }}
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`flex flex-col md:flex-row md:items-baseline md:gap-5 py-3 md:py-5 ${
+                  i === 0 ? "pr-4 md:pr-8" : "px-4 md:px-8"
+                }`}
               >
-                <div className="flex items-start gap-4">
-                  <motion.div
-                    className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white shadow-lg"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    {item.icon}
-                  </motion.div>
-                  <div className="flex-1">
-                    <h4 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors">
-                      {item.title}
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {item.skills.map((skill, skillIdx) => (
-                        <span
-                          key={skillIdx}
-                          className="flex items-center justify-center px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full border border-slate-600/50 hover:border-blue-500/50 hover:text-blue-400 transition-all duration-200 cursor-pointer"
+                <dd
+                  className="order-1 font-bold text-accent leading-none tracking-tight"
+                  style={{ fontSize: "clamp(2.25rem, min(8vw, 12vh), 6rem)" }}
+                >
+                  {s.number}
+                </dd>
+                <dt className="order-2 mt-1 md:mt-0 text-xs md:text-base text-muted">
+                  {s.label}
+                </dt>
+              </div>
+            ))}
+          </motion.dl>
+
+          {/* Panels: swipeable on mobile, side-by-side columns on desktop */}
+          <motion.div
+            variants={itemVariants}
+            className="flex-1 min-h-0 flex flex-col gap-3"
+          >
+            <div
+              ref={scrollerRef}
+              onScroll={handleScroll}
+              className="flex-1 min-h-0 flex gap-6 overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-[3fr_2fr] md:gap-14 md:overflow-visible md:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {/* Summary */}
+              <article
+                aria-label="Summary"
+                className="w-full shrink-0 snap-center md:w-auto md:shrink min-h-0 overflow-y-auto md:overflow-visible md:self-center flex flex-col gap-3 md:gap-5"
+              >
+                <h2 className="text-xl md:text-3xl font-bold">
+                  Frontend Developer
+                </h2>
+                <p className="text-sm md:text-lg text-muted leading-relaxed">
+                  With{" "}
+                  <span className="text-accent font-semibold">
+                    3 years of professional experience
+                  </span>
+                  , I specialize in crafting scalable, performant web
+                  applications that prioritize user experience and code quality.
+                </p>
+                <p className="text-sm md:text-lg text-muted leading-relaxed">
+                  My expertise spans across{" "}
+                  <span className="text-accent font-semibold">
+                    React.js, Next.js, TypeScript
+                  </span>
+                  , and modern frontend technologies. I've successfully
+                  delivered enterprise-level HRIS systems, task management
+                  platforms, and full-stack solutions that streamline business
+                  operations.
+                </p>
+                <p className="text-sm md:text-lg text-muted leading-relaxed">
+                  I'm passionate about writing clean, maintainable code and
+                  creating intuitive interfaces that solve real-world problems.
+                  My approach combines technical excellence with strong
+                  collaboration skills to deliver exceptional results.
+                </p>
+              </article>
+
+              {/* Expertise */}
+              <article
+                aria-label="Expertise"
+                className="w-full shrink-0 snap-center md:w-auto md:shrink min-h-0 overflow-y-auto md:overflow-visible md:self-center flex flex-col gap-5 md:gap-7"
+              >
+                {expertise.map(({ icon: Icon, title, skills }) => (
+                  <div key={title} className="flex flex-col gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent text-white shrink-0">
+                        <Icon className="w-5 h-5" />
+                      </span>
+                      <h3 className="text-base md:text-xl font-semibold">
+                        {title}
+                      </h3>
+                    </div>
+                    <ul className="flex flex-wrap gap-2">
+                      {skills.map((skill) => (
+                        <li
+                          key={skill}
+                          className="px-3 py-1 text-xs md:text-sm rounded-full bg-background border border-border text-muted"
                         >
                           {skill}
-                        </span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {stats.map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
-                  whileHover={{
-                    scale: 1.05,
-                    borderColor: "rgba(59, 130, 246, 0.5)",
-                  }}
+                ))}
+              </article>
+            </div>
+
+            {/* Mobile page dots */}
+            <div className="md:hidden flex items-center justify-center shrink-0">
+              {Array.from({ length: PANELS }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToPage(i)}
+                  aria-label={i === 0 ? "Show summary" : "Show expertise"}
+                  aria-current={page === i}
+                  className="h-8 w-8 flex items-center justify-center focus:outline-none group"
                 >
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    {stat.number}
-                  </div>
-                  <div className="text-slate-400 text-sm mt-1">
-                    {stat.label}
-                  </div>
-                </motion.div>
+                  <span
+                    className={`block h-2 rounded-full transition-all duration-300 group-focus-visible:ring-2 group-focus-visible:ring-accent ${
+                      page === i ? "w-6 bg-accent" : "w-2 bg-muted/50"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </motion.div>
-        </div>
-
-        {/* Core Values */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="bg-gradient-to-r from-slate-800/50 to-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8"
-        >
-          <h3 className="text-2xl font-bold text-white mb-6 text-center">
-            Core Principles
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Quality First",
-                desc: "Delivering excellence through attention to detail and best practices",
-              },
-              {
-                title: "Continuous Learning",
-                desc: "Staying current with the latest technologies and industry trends",
-              },
-              {
-                title: "Collaborative Approach",
-                desc: "Working effectively with teams to achieve common goals",
-              },
-            ].map((value, idx) => (
-              <motion.div
-                key={idx}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 1 + idx * 0.1 }}
-              >
-                <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-3"></div>
-                <h4 className="text-white font-semibold mb-2">{value.title}</h4>
-                <p className="text-slate-400 text-sm">{value.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div> */}
+        </motion.div>
       </div>
     </section>
   );

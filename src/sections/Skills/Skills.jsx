@@ -25,8 +25,9 @@ const categories = [
       { name: "Next.js", icon: SiNextdotjs, color: "currentColor" },
       { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
-      { name: "Framer Motion", icon: SiFramer, color: "#0055FF" },
       { name: "React Query", icon: SiReactquery, color: "#FF4154" },
+      { name: "Framer Motion", icon: SiFramer, color: "#0055FF" },
+      { name: "GSAP", icon: SiFramer, color: "#88CE02" },
     ],
   },
   {

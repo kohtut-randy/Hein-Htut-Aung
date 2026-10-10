@@ -9,6 +9,8 @@ import Supabase from "../../assets/Supabase.png";
 import Chatbot from "../../assets/chatbot.png";
 import Meeting from "../../assets/Meeting.png";
 import MachineLearning from "../../assets/Machine_Learning.jpg";
+import DataTable from "../../assets/datatable.png";
+import Animation from "../../assets/Animation.png";
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Data = [
@@ -29,6 +31,24 @@ const Data = [
     liveDemo: "#",
     code: "#",
     image: Smart,
+  },
+  {
+    header: "Reusable Data Table",
+    description:
+      "A generic, typed DataTable component built with no table or grid library, powering a bouldering gym staff dashboard. Features client and server sorting and pagination, inline and lazy-loaded expandable rows, sticky columns, and loading, empty and error states. Accessible with real table semantics and a 100 Lighthouse score.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Yup"],
+    liveDemo: "https://reusable-data-table-sage.vercel.app/",
+    code: "https://github.com/kohtut-randy/Reusable-Data-Table",
+    image: DataTable,
+  },
+  {
+    header: "The Last Ember",
+    description:
+      "An animation-heavy, original-art landing page told as one continuous scroll story. Features a canvas forge-spark loader, a hero with live rain, ripples and embers, four pinned story chapters with parallax, and a finale where a canvas sword trail reveals a burning ember field. Built with GSAP ScrollTrigger, Lenis smooth scrolling and a scroll-scrubbed Lottie gate, with responsive breakpoints and a reduced-motion mode.",
+    tech: ["React", "TypeScript", "GSAP", "Lenis", "Lottie", "Tailwind CSS"],
+    liveDemo: "https://animation-website-sooty-sigma.vercel.app/",
+    code: "https://github.com/kohtut-randy/UI-Animation-Website",
+    image: Animation,
   },
   {
     header: "NBA Team Manager",

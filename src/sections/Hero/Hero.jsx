@@ -67,46 +67,61 @@ function Hero() {
           ))}
         </h1>
 
-        {/* Role + intro */}
+        {/* Role + Intro + CTAs in a 3-col grid */}
         <motion.div
-          className="grid gap-3 md:gap-12 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] pt-[3vh] border-t border-border"
+          className="grid gap-6 md:gap-10 md:grid-cols-3 pt-[3vh] border-t border-border"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.7, ease: "easeOut" }}
         >
-          <h2 className="text-2xl md:text-3xl font-semibold text-accent min-h-[2.25rem]">
-            <Typewriter
-              words={["Frontend Developer"]}
-              loop={true}
-              cursor
-              cursorStyle="|"
-              typeSpeed={80}
-              deleteSpeed={60}
-              delaySpeed={2000}
-            />
-          </h2>
+          {/* Role */}
+          <div className="flex flex-col gap-3">
+            {/* <span className="text-xs uppercase tracking-widest text-muted">
+              Role
+            </span> */}
+            <h2 className="text-2xl md:text-3xl font-semibold text-accent min-h-[2.25rem]">
+              <Typewriter
+                words={["Frontend Developer"]}
+                loop={true}
+                cursor
+                cursorStyle="|"
+                typeSpeed={80}
+                deleteSpeed={60}
+                delaySpeed={2000}
+              />
+            </h2>
+          </div>
 
-          <div className="flex flex-col gap-4 md:gap-6">
-            <p className="text-sm sm:text-base md:text-lg text-muted leading-relaxed max-w-2xl">
+          {/* Intro */}
+          <div className="flex flex-col gap-3 md:col-span-1">
+            {/* <span className="text-xs uppercase tracking-widest text-muted">
+              About
+            </span> */}
+            <p className="text-sm sm:text-base md:text-lg text-muted leading-relaxed">
               I build modern web applications with{" "}
               <span className="text-foreground font-semibold">React</span>,{" "}
               <span className="text-foreground font-semibold">TypeScript</span>,
               and <span className="text-foreground font-semibold">Next.js</span>
               , with a focus on clean architecture, reusable components, and
-              maintainable code. My work is fast, responsive, and built to meet
-              both business and technical requirements.
+              maintainable code.
             </p>
+          </div>
 
+          {/* CTAs */}
+          <div className="flex flex-col gap-3 justify-start">
+            {/* <span className="text-xs uppercase tracking-widest text-muted">
+              Get started
+            </span> */}
             <div className="flex flex-row gap-3 sm:gap-4">
               <a
                 href="#projects"
-                className="flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-3.5 text-center bg-accent hover:bg-indigo-700 text-white font-semibold rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                className="flex-1 px-6 py-3 text-center bg-accent hover:bg-indigo-700 text-white font-semibold rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
               >
                 View my work
               </a>
               <a
                 href="#contact"
-                className="flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-3.5 text-center border border-border hover:border-accent text-foreground font-semibold rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="flex-1 px-6 py-3 text-center border border-border hover:border-accent text-foreground font-semibold rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 Get in touch
               </a>
@@ -114,7 +129,6 @@ function Hero() {
           </div>
         </motion.div>
       </div>
-
       {/* Tech marquee */}
       <div
         className="w-full shrink-0 overflow-hidden border-y border-border py-4 md:py-5"

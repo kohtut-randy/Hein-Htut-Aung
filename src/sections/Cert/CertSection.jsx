@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ExternalLink, X, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ExternalLink,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Award,
+  Maximize2,
+} from "lucide-react";
 import fecert from "../../assets/frontend_developer_react certificate.jpg";
 import basic from "../../assets/javascript_basic certificate.jpg";
 import mid from "../../assets/javascript_intermediate certificate.jpg";
@@ -185,7 +192,9 @@ function Lightbox({ index, onClose, onChange }) {
 function CertSection() {
   const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
   const [openIndex, setOpenIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const closeLightbox = useCallback(() => setOpenIndex(null), []);
+  const selectedCert = certifications[selectedIndex];
 
   return (
     <section
@@ -195,63 +204,120 @@ function CertSection() {
       style={{ height: "100dvh" }}
     >
       <div className="h-full w-full max-w-6xl mx-auto px-4 md:px-6 pt-20 pb-5 flex flex-col gap-4 md:gap-6">
-        {/* Heading row */}
         <div className="flex items-end justify-between gap-4 shrink-0">
-          <motion.h1
-            className="text-xl sm:text-2xl md:text-4xl font-bold text-accent"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            Certifications
-          </motion.h1>
+          <div>
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase text-muted">
+              <Award className="h-4 w-4 text-accent" aria-hidden="true" />
+              Credentials <span className="text-accent">/ 06</span>
+            </p>
+            <motion.h1
+              className="mt-1 text-2xl md:text-4xl font-bold text-foreground"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+            >
+              Certifications
+            </motion.h1>
+          </div>
           <motion.p
-            className="hidden md:block text-muted text-sm md:text-base text-right max-w-xs"
+            className="hidden md:block text-muted text-sm text-right max-w-xs"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Industry-recognized proof of continuous learning
+            Verified milestones in my development journey
           </motion.p>
         </div>
 
-        {/* Certificate grid: 2x3 on mobile, 3x2 on desktop, always fills the leftover height */}
-        <motion.ul
-          className="flex-1 min-h-0 grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2 gap-3 md:gap-5"
-          variants={gridVariants}
-          initial="hidden"
-          animate={inView ? "show" : "hidden"}
-        >
-          {certifications.map((cert, i) => (
-            <motion.li
-              key={cert.id}
-              variants={tileVariants}
-              className="min-h-0 min-w-0"
+        <div className="flex-1 min-h-0 grid grid-rows-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:grid-rows-1 md:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.8fr)] gap-3 md:gap-5">
+          <motion.article
+            key={selectedCert.id}
+            className="min-h-0 flex flex-col overflow-hidden rounded-lg border border-border bg-background"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <button
+              onClick={() => setOpenIndex(selectedIndex)}
+              aria-label={`Open ${selectedCert.title} certificate`}
+              className="group relative flex-1 min-h-0 bg-surface p-3 md:p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
             >
-              <button
-                onClick={() => setOpenIndex(i)}
-                aria-label={`View ${cert.title} certificate`}
-                className="group w-full h-full flex flex-col rounded-xl overflow-hidden bg-background border border-border hover:border-accent text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              <img
+                src={selectedCert.image}
+                alt={`${selectedCert.title} certificate`}
+                className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
+              />
+              <span className="absolute bottom-3 right-3 inline-flex items-center gap-2 bg-background/90 px-3 py-2 text-xs font-medium text-foreground">
+                <Maximize2 className="h-3.5 w-3.5" aria-hidden="true" />
+                Expand
+              </span>
+            </button>
+
+            <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border p-3 md:p-5">
+              <div className="min-w-0">
+                <p className="text-xs text-muted">
+                  {selectedCert.organization} <span aria-hidden="true">/</span>{" "}
+                  {selectedCert.date}
+                </p>
+                <h2 className="truncate text-sm font-semibold text-foreground md:text-lg">
+                  {selectedCert.title}
+                </h2>
+              </div>
+              <a
+                href={selectedCert.viewLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 inline-flex items-center gap-2 border border-border px-3 py-2 text-xs font-medium text-foreground transition-colors hover:border-accent hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent md:px-4 md:text-sm"
               >
-                <div className="flex-1 min-h-0 bg-black/20 p-1.5 md:p-2 overflow-hidden">
-                  <img
-                    src={cert.image}
-                    alt=""
-                    className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
-                  />
-                </div>
-                <div className="px-3 py-2 md:px-4 md:py-3 shrink-0">
-                  <h2 className="text-xs sm:text-sm md:text-base font-semibold leading-snug line-clamp-2">
-                    {cert.title}
-                  </h2>
-                  <p className="text-xs text-muted mt-0.5">
-                    {cert.organization} · {cert.date}
-                  </p>
-                </div>
-              </button>
-            </motion.li>
-          ))}
-        </motion.ul>
+                Verify <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </motion.article>
+
+          <motion.ul
+            aria-label="Choose a certificate"
+            className="min-h-0 grid grid-cols-2 grid-rows-3 gap-2 md:flex md:flex-col md:overflow-y-auto md:pr-1"
+            variants={gridVariants}
+            initial="hidden"
+            animate={inView ? "show" : "hidden"}
+          >
+            {certifications.map((cert, i) => {
+              const isSelected = i === selectedIndex;
+              return (
+                <motion.li
+                  key={cert.id}
+                  variants={tileVariants}
+                  className="min-h-0 min-w-0 md:min-h-[4.5rem]"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setSelectedIndex(i)}
+                    aria-pressed={isSelected}
+                    className={`flex h-full w-full items-center gap-2 overflow-hidden border px-2 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent md:gap-3 md:px-3 ${
+                      isSelected
+                        ? "border-accent bg-accent/10"
+                        : "border-border bg-background hover:border-accent"
+                    }`}
+                  >
+                    <span
+                      className={`shrink-0 font-mono text-xs ${isSelected ? "text-accent" : "text-muted"}`}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold text-foreground md:text-sm">
+                        {cert.title}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[10px] text-muted md:text-xs">
+                        {cert.organization} · {cert.date}
+                      </span>
+                    </span>
+                  </button>
+                </motion.li>
+              );
+            })}
+          </motion.ul>
+        </div>
       </div>
 
       <AnimatePresence>
